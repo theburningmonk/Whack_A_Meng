@@ -1,0 +1,7 @@
+name: Whack_A_Meng
+author: Yan Cui
+description: A whack_a_mole style mini-game centred around characters from Here Be Monsters.
+dependencies:
+  browser: any
+  stagexl:
+    git: https://github.com/bp74/StageXL.git
