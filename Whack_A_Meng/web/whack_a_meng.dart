@@ -107,8 +107,6 @@ void loadResources() {
     welcome.onRemovedFromStage.listen((_) {
       Game game = new Game(resourceManager);
       stage.addChild(game);
-      
-      Mouse.cursor = MouseCursor.AUTO;
     });
   }).catchError((error) {
     for(var resource in resourceManager.failedResources) {
