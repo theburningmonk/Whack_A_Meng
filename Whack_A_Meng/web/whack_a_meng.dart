@@ -55,7 +55,7 @@ void loadResources() {
                         ..timeLimit = 30
                         ..duration = 3.0;
   
-  var resourceManager = new ResourceManager()
+  resourceManager = new ResourceManager()
   
       // character headshots
       ..addBitmapData("bashak", "images/BASHAK.png")
@@ -79,20 +79,33 @@ void loadResources() {
       ..addCustomObject("tile_types", tileTypes)
       
       // graphical assets
+      ..addBitmapData("welcome", "images/WELCOME.png")
       ..addBitmapData("hole", "images/MARKETPLACE_ENV_HOLE_RABBIT.png")
+      ..addBitmapData("hole_over", "images/MARKETPLACE_ENV_HOLE_RABBIT_OVER.png")
       ..addBitmapData("hammer", "images/HAMMER.png")
+      ..addBitmapData("awesome", "images/AWESOME.png")
+      ..addBitmapData("great", "images/GREAT.png")
+      ..addBitmapData("wood_sign", "images/WOOD_SIGN.png")
+      ..addBitmapData("start", "images/START.png")
+      ..addBitmapData("start_hover", "images/START_HOVER.png")
+      ..addBitmapData("start_click", "images/START_DOWN.png")
       
       // levels
       ..addCustomObject("level_1_spec", new Future.value(lvl1));
   
-  resourceManager.load().then((res) {
+  resourceManager.load().then((_) {
 
     stage.removeChild(loadingBitmap);
     stage.removeChild(loadingTextField);
     renderLoop.juggler.remove(loadingBitmapTween);
     
-    Game game = new Game(resourceManager); 
-    stage.addChild(game);
+    WelcomeScreen welcome = new WelcomeScreen(resourceManager);
+    stage.addChild(welcome);
+    
+    welcome.onRemovedFromStage.listen((_) {
+      Game game = new Game(resourceManager);
+      stage.addChild(game);
+    });
   }).catchError((error) {
     for(var resource in resourceManager.failedResources) {
       print("Loading resouce failed: ${resource.kind}.${resource.name} - ${resource.error}");

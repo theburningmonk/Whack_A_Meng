@@ -19,13 +19,13 @@ class Level extends Sprite {
     
     LevelSpec levelSpec = _resourceManager.getCustomObject("level_${level}_spec");
     
-    for (int i = -1; i < levelSpec.columns; i++) {
+    for (int i = -1; i <= levelSpec.columns; i++) {
       int x = _leftOffset + 100 * i;
       
       Bitmap top = new Bitmap(tileData)..x = x;
       addChild(top);
       
-      for (int j = -1; j < levelSpec.rows; j++) {
+      for (int j = -1; j <= levelSpec.rows; j++) {
         int y = _topOffset + 100 * j;
         
         Bitmap tile = new Bitmap(tileData)
@@ -33,7 +33,10 @@ class Level extends Sprite {
                             ..y = y;        
         addChild(tile);
         
-        if (i >= 0 && j >= 0) {        
+        if (i >= 0 
+            && j >= 0 
+            && i < levelSpec.columns
+            && j < levelSpec.rows) {        
           Hole hole = new Hole(_resourceManager)
                             ..x = x
                             ..y = y;
