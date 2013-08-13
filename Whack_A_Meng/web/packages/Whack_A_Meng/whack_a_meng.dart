@@ -10,6 +10,7 @@ part "src/Hole.dart";
 part "src/Target.dart";
 part "src/Button.dart";
 part "src/WelcomeScreen.dart";
+part "src/State.dart";
 
 class Game extends Sprite {
   ResourceManager _resourceManager;

@@ -2,6 +2,7 @@ part of whack_a_meng;
 
 class Hole extends Sprite {
   ResourceManager _resourceManager;
+  BitmapData _whack;
   BitmapData _awesome;
   BitmapData _great;
   BitmapData _meng;
@@ -13,6 +14,7 @@ class Hole extends Sprite {
     addChild(background);
     addChild(foreground);
     
+    _whack = _resourceManager.getBitmapData("whack");
     _awesome = _resourceManager.getBitmapData("awesome");
     _great = _resourceManager.getBitmapData("great");
     _meng = _resourceManager.getBitmapData("meng");
@@ -21,13 +23,13 @@ class Hole extends Sprite {
   }
   
   _onMouseClick(MouseEvent evt) {
-    Bitmap awesome = new Bitmap(_awesome);
-    awesome.x = evt.stageX - _awesome.width / 2;
-    awesome.y = evt.stageY - _awesome.height / 2;
+    Bitmap awesome = new Bitmap(_whack);
+    awesome.x = evt.stageX - _whack.width / 2;
+    awesome.y = evt.stageY - _whack.height / 2;
     
     stage.addChild(awesome);
     
-    new Timer(new Duration(milliseconds : 200), () => stage.removeChild(awesome));
+    new Timer(new Duration(milliseconds : 300), () => stage.removeChild(awesome));
     new Timer(new Duration(milliseconds : 400), () => addChild(new Bitmap(_meng)));
     
     print("hole clicked");

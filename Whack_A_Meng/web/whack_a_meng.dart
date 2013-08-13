@@ -83,8 +83,10 @@ void loadResources() {
       ..addBitmapData("hole", "images/MARKETPLACE_ENV_HOLE_RABBIT.png")
       ..addBitmapData("hole_over", "images/MARKETPLACE_ENV_HOLE_RABBIT_OVER.png")
       ..addBitmapData("hammer", "images/HAMMER.png")
-      ..addBitmapData("awesome", "images/AWESOME.png")
+      ..addBitmapData("whack", "images/WHACK.png")
       ..addBitmapData("great", "images/GREAT.png")
+      ..addBitmapData("awesome", "images/AWESOME.png")
+      ..addBitmapData("ouch", "images/OUCH.png")
       ..addBitmapData("wood_sign", "images/WOOD_SIGN.png")
       ..addBitmapData("start", "images/START.png")
       ..addBitmapData("start_hover", "images/START_HOVER.png")
@@ -105,6 +107,8 @@ void loadResources() {
     welcome.onRemovedFromStage.listen((_) {
       Game game = new Game(resourceManager);
       stage.addChild(game);
+      
+      Mouse.cursor = MouseCursor.AUTO;
     });
   }).catchError((error) {
     for(var resource in resourceManager.failedResources) {
