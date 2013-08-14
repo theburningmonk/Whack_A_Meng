@@ -8,6 +8,7 @@ class Hole extends Sprite {
   BitmapData _awesome;
   BitmapData _great;
   
+  Sprite _overlay;
   Sprite _meng;
   
   bool _isActive = false;
@@ -18,10 +19,9 @@ class Hole extends Sprite {
     
     addChild(background);
     
-    Sprite overlay = new Sprite()
+    _overlay = new Sprite()
         ..addChild(foreground)
-        ..mouseEnabled = false;            
-    addChild(overlay);
+        ..mouseEnabled = false;
             
     _whack = _resourceManager.getBitmapData("whack");
     _awesome = _resourceManager.getBitmapData("awesome");
@@ -48,12 +48,25 @@ class Hole extends Sprite {
   
   _onEnterFrame(EnterFrameEvent evt) {
     if (!_isActive && _random.nextInt(100) < 1) {
-      addChildAt(_meng, 1);
+      addChild(_meng);
+      addChild(_overlay);
+      
       var tween = new Tween(_meng, 0.5)
         ..animate.x.to(-15);
-      stage.juggler.add(tween);
+      stage.juggler.add(tween);          
       
-      _isActive = true;      
+      _isActive = true;
+      
+      new Timer(new Duration(seconds : 2), () {
+        var tween = new Tween(_meng, 0.2)
+          ..animate.x.to(5)
+          ..onComplete = () {
+            removeChild(_meng);
+            removeChild(_overlay);
+            _isActive = false;
+          };
+        stage.juggler.add(tween);
+      });
     }
   }
 }
