@@ -11,17 +11,21 @@ part "src/Target.dart";
 part "src/Button.dart";
 part "src/WelcomeScreen.dart";
 part "src/State.dart";
+part "src/Hammer.dart";
 
 class Game extends Sprite {
   ResourceManager _resourceManager;
   
   Game(this._resourceManager) {
     this.onAddedToStage.listen(_onAddedToStage);
+    new Hammer(_resourceManager);
   }
   
   _onAddedToStage(Event e) {
     Level level = new Level(_resourceManager, 1);
     addChild(level);
     level.Start();
+    
+    addChild(Hammer.Instance);
   }
 }
