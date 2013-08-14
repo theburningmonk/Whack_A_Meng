@@ -12,10 +12,6 @@ class Level extends Sprite {
   static Level Current;
   
   Level(this._resourceManager, this.level) {
-    onMouseOver.listen((evt) => Hammer.Instance.Move(evt));
-    onMouseMove.listen((evt) => Hammer.Instance.Move(evt));
-    onMouseClick.listen((evt) => Hammer.Instance.Hit(evt));
-    
     Current = this;
   }
   

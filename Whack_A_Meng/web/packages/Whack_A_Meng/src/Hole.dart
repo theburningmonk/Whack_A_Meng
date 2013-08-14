@@ -1,11 +1,16 @@
 part of whack_a_meng;
 
 class Hole extends Sprite {
+  Random _random = new Random();
+  
   ResourceManager _resourceManager;
   BitmapData _whack;
   BitmapData _awesome;
   BitmapData _great;
-  BitmapData _meng;
+  
+  Sprite _meng;
+  
+  bool _isActive = false;
   
   Hole(this._resourceManager) {
     Bitmap background = new Bitmap(_resourceManager.getBitmapData("hole"));
@@ -21,39 +26,34 @@ class Hole extends Sprite {
     _whack = _resourceManager.getBitmapData("whack");
     _awesome = _resourceManager.getBitmapData("awesome");
     _great = _resourceManager.getBitmapData("great");
-    _meng = _resourceManager.getBitmapData("meng");
     
-    List<Point> path = [ new Point(21, 25), 
-                         new Point(24, 33),
-                         new Point(36, 39),
-                         new Point(45, 53),
-                         new Point(45, 61),
-                         new Point(51, 68),
-                         new Point(51, 83),
-                         new Point(58, 86),
-                         new Point(58, 100),
-                         new Point(0, 100),
-                         new Point(0, 0),
-                         new Point(21, 0),
-                         new Point(21, 25) ];
-        
-    Sprite meng = new Sprite()
-        ..addChild(new Bitmap(_meng))
+    _meng = new Sprite()
+        ..addChild(new Bitmap(_resourceManager.getBitmapData("meng")))
         ..onMouseClick.listen(_onMouseClick)
-        ..mask = new Mask.custom(path);    
-    this.addChildAt(meng, 1);
+        ..x = 5
+        ..y = 15;    
+    
+    this.onEnterFrame.listen(_onEnterFrame);
   }
   
   _onMouseClick(MouseEvent evt) {
-    Bitmap awesome = new Bitmap(_whack);
-    awesome.x = evt.stageX - _whack.width / 2;
-    awesome.y = evt.stageY - _whack.height / 2;
+    Bitmap whack = new Bitmap(_whack);
+    whack.x = evt.localX - _whack.width / 2;
+    whack.y = evt.localY - _whack.height / 2;
     
-    stage.addChild(awesome);
+    addChild(whack);
     
-    new Timer(new Duration(milliseconds : 300), () => stage.removeChild(awesome));
-//    new Timer(new Duration(milliseconds : 400), () => addChild(new Bitmap(_meng)));
-    
-    print("meng clicked");
+    new Timer(new Duration(milliseconds : 300), () => removeChild(whack));
+  }
+  
+  _onEnterFrame(EnterFrameEvent evt) {
+    if (!_isActive && _random.nextInt(100) < 1) {
+      addChildAt(_meng, 1);
+      var tween = new Tween(_meng, 0.5)
+        ..animate.x.to(-15);
+      stage.juggler.add(tween);
+      
+      _isActive = true;      
+    }
   }
 }

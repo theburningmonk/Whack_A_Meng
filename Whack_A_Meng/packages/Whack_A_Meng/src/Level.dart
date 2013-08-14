@@ -6,18 +6,13 @@ class Level extends Sprite {
   
   Random _random = new Random(); 
   
-  int _leftOffset = 100;
-  int _topOffset = 50;
+  int _leftOffset = 25;
+  int _topOffset = 25;
   
-  Sprite hammer;
+  static Level Current;
   
   Level(this._resourceManager, this.level) {
-    hammer = new Sprite()
-        ..addChild(new Bitmap(_resourceManager.getBitmapData("hammer")))
-        ..mouseEnabled = false;
-    
-    onMouseOver.listen(MoveHammer);
-    onMouseMove.listen(MoveHammer);
+    Current = this;
   }
   
   Start() {    
@@ -38,9 +33,6 @@ class Level extends Sprite {
         addChild(hole);
       }
     }
-    
-    Mouse.hide();    
-    addChild(hammer);
   }
   
   DrawBackground() {
@@ -69,10 +61,5 @@ class Level extends Sprite {
         ..y = tileData.height * (vTiles-1);
       addChild(river);
     }
-  }
-  
-  MoveHammer(MouseEvent evt) {
-    hammer.x = evt.stageX;
-    hammer.y = evt.stageY;
   }
 }

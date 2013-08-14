@@ -27,5 +27,9 @@ class Game extends Sprite {
     level.Start();
     
     addChild(Hammer.Instance);
+    Mouse.hide();
+    
+    onMouseMove.listen((evt) => Hammer.Instance.Move(evt));
+    onMouseClick.listen((evt) => Hammer.Instance.Hit(evt));
   }
 }
