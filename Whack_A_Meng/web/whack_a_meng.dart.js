@@ -91,6 +91,8 @@ $$.Closure$_determineMouseWheelEventType = {"": "Closure;call$1,$name"};
 
 $$.Closure$linear = {"": "Closure;call$1,$name"};
 
+$$.Closure$easeOutElastic = {"": "Closure;call$1,$name"};
+
 $$.Closure$main = {"": "Closure;call$0,$name"};
 
 (function (reflectionData) {
@@ -427,6 +429,17 @@ JSNumber: {"": "num/Interceptor;",
     if (typeof other !== "number")
       throw $.wrapException(new $.ArgumentError(other));
     return receiver * other;
+  },
+  $mod: function(receiver, other) {
+    var result = receiver % other;
+    if (result === 0)
+      return 0;
+    if (result > 0)
+      return result;
+    if (other < 0)
+      return result - other;
+    else
+      return result + other;
   },
   $tdiv: function(receiver, other) {
     if (typeof other !== "number")
@@ -985,7 +998,7 @@ _BaseSendPort: {"": "Object;_isolateId<",
     completer._Completer$0();
     port = $.ReceivePortImpl$();
     this.send$2(message, new $._NativeJsSendPort(port, $globalState.currentContext.id));
-    port._liblib4$_callback = new $._BaseSendPort_call_closure(completer, port);
+    port._callback = new $._BaseSendPort_call_closure(completer, port);
     return completer.future;
   },
   $isSendPort: true
@@ -994,7 +1007,7 @@ _BaseSendPort: {"": "Object;_isolateId<",
 _BaseSendPort_call_closure: {"": "Closure;completer_0,port_1",
   call$2: function(value, ignoreReplyTo) {
     var t1 = this.port_1;
-    t1._liblib4$_callback = null;
+    t1._callback = null;
     $globalState.currentContext.unregister$1(t1._id);
     t1 = this.completer_0;
     if (typeof value === "object" && value !== null && !!$.getInterceptor(value).$isException)
@@ -1034,7 +1047,7 @@ _NativeJsSendPort_send_closure: {"": "Closure;this_1,message_2,replyTo_3",
     isolate = t4.$index(t4, t2.get$_isolateId());
     if (isolate == null)
       return;
-    if (t2.get$_receivePort().get$_liblib4$_callback() == null)
+    if (t2.get$_receivePort().get$_callback() == null)
       return;
     shouldSerialize = $globalState.currentContext != null && $globalState.currentContext.id !== t2.get$_isolateId();
     msg = this.message_2;
@@ -1055,14 +1068,14 @@ _NativeJsSendPort_send__closure: {"": "Closure;box_0,this_4,shouldSerialize_5",
   call$0: function() {
     var t1, t2;
     t1 = this.this_4;
-    if (t1.get$_receivePort().get$_liblib4$_callback() != null) {
+    if (t1.get$_receivePort().get$_callback() != null) {
       if (this.shouldSerialize_5) {
         t2 = this.box_0;
         t2.msg_0 = $._deserializeMessage(t2.msg_0);
         t2.reply_1 = $._deserializeMessage(t2.reply_1);
       }
       t2 = this.box_0;
-      t1.get$_receivePort()._liblib4$_callback$2(t2.msg_0, t2.reply_1);
+      t1.get$_receivePort()._callback$2(t2.msg_0, t2.reply_1);
     }
   }
 },
@@ -1120,9 +1133,9 @@ _WorkerSendPort_send_closure: {"": "Closure;this_0,message_1,replyTo_2",
   }
 },
 
-ReceivePortImpl: {"": "Object;_id<,_liblib4$_callback<",
-  _liblib4$_callback$2: function(arg0, arg1) {
-    return this._liblib4$_callback.call$2(arg0, arg1);
+ReceivePortImpl: {"": "Object;_id<,_callback<",
+  _callback$2: function(arg0, arg1) {
+    return this._callback.call$2(arg0, arg1);
   },
   ReceivePortImpl$0: function() {
     $globalState.currentContext.register$2(this._id, this);
@@ -3166,7 +3179,7 @@ _BroadcastStream: {"": "_ControllerStream;_controller",
   $as_ControllerStream: null
 },
 
-_BroadcastSubscription: {"": "_ControllerSubscription;_eventState@,_liblib5$_next@,_liblib5$_previous@,_controller,_liblib5$_onData,_onError,_onDone,_zone,_state,_pending",
+_BroadcastSubscription: {"": "_ControllerSubscription;_eventState@,_liblib4$_next@,_liblib4$_previous@,_controller,_liblib4$_onData,_onError,_onDone,_zone,_state,_pending",
   get$_controller: function() {
     return this._controller;
   },
@@ -3231,7 +3244,7 @@ _BroadcastSubscription: {"": "_ControllerSubscription;_eventState@,_liblib5$_nex
 
 },
 
-_BroadcastStreamController: {"": "Object;_onListen<,_state@,_liblib5$_next@,_liblib5$_previous@",
+_BroadcastStreamController: {"": "Object;_onListen<,_state@,_liblib4$_next@,_liblib4$_previous@",
   _ensureDoneFuture$0: function() {
     var t1 = this._doneFuture;
     if (t1 != null)
@@ -3241,20 +3254,20 @@ _BroadcastStreamController: {"": "Object;_onListen<,_state@,_liblib5$_next@,_lib
     return t1;
   },
   _addListener$1: function(subscription) {
-    subscription.set$_liblib5$_previous(this._liblib5$_previous);
-    subscription.set$_liblib5$_next(this);
-    this._liblib5$_previous.set$_liblib5$_next(subscription);
-    this._liblib5$_previous = subscription;
+    subscription.set$_liblib4$_previous(this._liblib4$_previous);
+    subscription.set$_liblib4$_next(this);
+    this._liblib4$_previous.set$_liblib4$_next(subscription);
+    this._liblib4$_previous = subscription;
     subscription.set$_eventState(this._state & 1);
   },
   _removeListener$1: function(subscription) {
     var previous, next;
-    previous = subscription.get$_liblib5$_previous();
-    next = subscription.get$_liblib5$_next();
-    previous.set$_liblib5$_next(next);
-    next.set$_liblib5$_previous(previous);
-    subscription.set$_liblib5$_previous(subscription);
-    subscription.set$_liblib5$_next(subscription);
+    previous = subscription.get$_liblib4$_previous();
+    next = subscription.get$_liblib4$_next();
+    previous.set$_liblib4$_next(next);
+    next.set$_liblib4$_previous(previous);
+    subscription.set$_liblib4$_previous(subscription);
+    subscription.set$_liblib4$_next(subscription);
   },
   _subscribe$4: function(onData, onError, onDone, cancelOnError) {
     var t1, t2, subscription;
@@ -3264,23 +3277,23 @@ _BroadcastStreamController: {"": "Object;_onListen<,_state@,_liblib5$_next@,_lib
     t2 = cancelOnError ? 1 : 0;
     subscription = new $._BroadcastSubscription(null, null, null, this, onData, onError, onDone, t1, t2, null);
     subscription._BufferingStreamSubscription$4(onData, onError, onDone, cancelOnError);
-    subscription._liblib5$_previous = subscription;
-    subscription._liblib5$_next = subscription;
+    subscription._liblib4$_previous = subscription;
+    subscription._liblib4$_next = subscription;
     this._addListener$1(subscription);
-    t1 = this._liblib5$_next;
-    t2 = this._liblib5$_previous;
+    t1 = this._liblib4$_next;
+    t2 = this._liblib4$_previous;
     if (t1 == null ? t2 == null : t1 === t2)
       $._runGuarded(this._onListen);
     return subscription;
   },
   _recordCancel$1: function(subscription) {
-    if (subscription.get$_liblib5$_next() === subscription)
+    if (subscription.get$_liblib4$_next() === subscription)
       return;
     if (subscription.get$_isFiring())
       subscription._setRemoveAfterFiring$0();
     else {
       this._removeListener$1(subscription);
-      if ((this._state & 2) === 0 && this._liblib5$_next === this)
+      if ((this._state & 2) === 0 && this._liblib4$_next === this)
         this._callOnCancel$0();
     }
   },
@@ -3320,7 +3333,7 @@ _BroadcastStreamController: {"": "Object;_onListen<,_state@,_liblib5$_next@,_lib
   get$done: function() {
     return this._ensureDoneFuture$0();
   },
-  _liblib5$_add$1: function(data) {
+  _liblib4$_add$1: function(data) {
     this._sendData$1(data);
   },
   _addError$1: function(error) {
@@ -3337,11 +3350,11 @@ _BroadcastStreamController: {"": "Object;_onListen<,_state@,_liblib5$_next@,_lib
     t1 = this._state;
     if ((t1 & 2) !== 0)
       throw $.wrapException(new $.StateError("Cannot fire new event. Controller is already firing an event"));
-    if (this._liblib5$_next === this)
+    if (this._liblib4$_next === this)
       return;
     id = t1 & 1;
     this._state = (t1 ^ 3) >>> 0;
-    link = this._liblib5$_next;
+    link = this._liblib4$_next;
     for (; link !== this;)
       if (link._expectsEvent$1(id)) {
         t1 = link.get$_eventState();
@@ -3350,7 +3363,7 @@ _BroadcastStreamController: {"": "Object;_onListen<,_state@,_liblib5$_next@,_lib
         link.set$_eventState((t1 | 2) >>> 0);
         action.call$1(link);
         link._toggleEventId$0();
-        link0 = link.get$_liblib5$_next();
+        link0 = link.get$_liblib4$_next();
         if (link.get$_removeAfterFiring())
           this._removeListener$1(link);
         t1 = link.get$_eventState();
@@ -3359,9 +3372,9 @@ _BroadcastStreamController: {"": "Object;_onListen<,_state@,_liblib5$_next@,_lib
         link.set$_eventState((t1 & 4294967293) >>> 0);
         link = link0;
       } else
-        link = link.get$_liblib5$_next();
+        link = link.get$_liblib4$_next();
     this._state = (this._state & 4294967293) >>> 0;
-    if (this._liblib5$_next === this)
+    if (this._liblib4$_next === this)
       this._callOnCancel$0();
   },
   _callOnCancel$0: function() {
@@ -3377,19 +3390,19 @@ _BroadcastStreamController: {"": "Object;_onListen<,_state@,_liblib5$_next@,_lib
   }
 },
 
-_SyncBroadcastStreamController: {"": "_BroadcastStreamController;_onListen,_onCancel,_state,_liblib5$_next,_liblib5$_previous,_addStreamState,_doneFuture",
+_SyncBroadcastStreamController: {"": "_BroadcastStreamController;_onListen,_onCancel,_state,_liblib4$_next,_liblib4$_previous,_addStreamState,_doneFuture",
   _sendData$1: function(data) {
-    if (this._liblib5$_next === this)
+    if (this._liblib4$_next === this)
       return;
     this._forEachListener$1(new $._SyncBroadcastStreamController__sendData_closure(this, data));
   },
   _sendError$1: function(error) {
-    if (this._liblib5$_next === this)
+    if (this._liblib4$_next === this)
       return;
     this._forEachListener$1(new $._SyncBroadcastStreamController__sendError_closure(this, error));
   },
   _sendDone$0: function() {
-    if (this._liblib5$_next !== this)
+    if (this._liblib4$_next !== this)
       this._forEachListener$1(new $._SyncBroadcastStreamController__sendDone_closure(this));
     else
       this._doneFuture._asyncSetValue$1(null);
@@ -3399,7 +3412,7 @@ _SyncBroadcastStreamController: {"": "_BroadcastStreamController;_onListen,_onCa
 
 _SyncBroadcastStreamController__sendData_closure: {"": "Closure;this_0,data_1",
   call$1: function(subscription) {
-    subscription._liblib5$_add$1(this.data_1);
+    subscription._liblib4$_add$1(this.data_1);
   }
 },
 
@@ -3415,7 +3428,7 @@ _SyncBroadcastStreamController__sendDone_closure: {"": "Closure;this_0",
   }
 },
 
-_AsBroadcastStreamController: {"": "_SyncBroadcastStreamController;_pending,_onListen,_onCancel,_state,_liblib5$_next,_liblib5$_previous,_addStreamState,_doneFuture",
+_AsBroadcastStreamController: {"": "_SyncBroadcastStreamController;_pending,_onListen,_onCancel,_state,_liblib4$_next,_liblib4$_previous,_addStreamState,_doneFuture",
   _addPendingEvent$1: function($event) {
     var t1;
     if (this._pending == null)
@@ -4216,9 +4229,9 @@ _StreamController: {"": "Object;_state@",
   add$1: function(_, value) {
     if (this._state >= 4)
       throw $.wrapException(this._badEventState$0());
-    this._liblib5$_add$1(value);
+    this._liblib4$_add$1(value);
   },
-  _liblib5$_add$1: function(value) {
+  _liblib4$_add$1: function(value) {
     var t1 = this._state;
     if ((t1 & 1) !== 0)
       this._sendData$1(value);
@@ -4292,7 +4305,7 @@ _StreamController__subscribe_closure: {"": "Closure;this_0",
 
 _SyncStreamControllerDispatch: {"": "Object;",
   _sendData$1: function(data) {
-    this.get$_subscription()._liblib5$_add$1(data);
+    this.get$_subscription()._liblib4$_add$1(data);
   },
   _sendError$1: function(error) {
     this.get$_subscription()._addError$1(error);
@@ -4359,7 +4372,7 @@ _ControllerStream: {"": "_StreamImpl;_controller",
   $as_StreamImpl: null
 },
 
-_ControllerSubscription: {"": "_BufferingStreamSubscription;_controller<,_liblib5$_onData,_onError,_onDone,_zone,_state,_pending",
+_ControllerSubscription: {"": "_BufferingStreamSubscription;_controller<,_liblib4$_onData,_onError,_onDone,_zone,_state,_pending",
   _onCancel$0: function() {
     this.get$_controller()._recordCancel$1(this);
   },
@@ -4377,9 +4390,9 @@ _ControllerSubscription: {"": "_BufferingStreamSubscription;_controller<,_liblib
   }
 },
 
-_BufferingStreamSubscription: {"": "Object;_liblib5$_onData,_onError,_onDone,_zone<,_state@,_pending",
-  _liblib5$_onData$1: function(arg0) {
-    return this._liblib5$_onData.call$1(arg0);
+_BufferingStreamSubscription: {"": "Object;_liblib4$_onData,_onError,_onDone,_zone<,_state@,_pending",
+  _liblib4$_onData$1: function(arg0) {
+    return this._liblib4$_onData.call$1(arg0);
   },
   _onError$1: function(arg0) {
     return this._onError.call$1(arg0);
@@ -4451,7 +4464,7 @@ _BufferingStreamSubscription: {"": "Object;_liblib5$_onData,_onError,_onDone,_zo
     if ((this._state & 32) !== 0)
       this._pending.cancelSchedule$0();
   },
-  _liblib5$_add$1: function(data) {
+  _liblib4$_add$1: function(data) {
     var t1 = this._state;
     if ((t1 & 8) !== 0)
       return;
@@ -4590,7 +4603,7 @@ _BufferingStreamSubscription$: function(_onData, _onError, _onDone, cancelOnErro
 
 _BufferingStreamSubscription__sendData_closure: {"": "Closure;this_0,data_1",
   call$0: function() {
-    return this.this_0._liblib5$_onData$1(this.data_1);
+    return this.this_0._liblib4$_onData$1(this.data_1);
   }
 },
 
@@ -4738,7 +4751,7 @@ _DummyStreamSubscription_pause_closure: {"": "Closure;this_0",
   }
 },
 
-_AsBroadcastStream: {"": "Stream;_liblib5$_source,_onListenHandler,_onCancelHandler,_zone<,_controller,_subscription",
+_AsBroadcastStream: {"": "Stream;_liblib4$_source,_onListenHandler,_onCancelHandler,_zone<,_controller,_subscription",
   _onListenHandler$1: function(arg0) {
     return this._onListenHandler.call$1(arg0);
   },
@@ -4756,7 +4769,7 @@ _AsBroadcastStream: {"": "Stream;_liblib5$_source,_onListenHandler,_onCancelHand
     if (this._subscription == null) {
       t2 = t1.get$add(t1);
       t3 = t1.get$addError();
-      this._subscription = this._liblib5$_source.listen$3$onDone$onError(t2, t1.get$close(t1), t3);
+      this._subscription = this._liblib4$_source.listen$3$onDone$onError(t2, t1.get$close(t1), t3);
     }
     if (onError == null)
       onError = $._nullErrorHandler$closure;
@@ -4805,7 +4818,7 @@ _AsBroadcastStream: {"": "Stream;_liblib5$_source,_onListenHandler,_onCancelHand
     this._subscription = null;
     t2 = this._controller;
     t2.get$_isEmpty;
-    t3 = t2._liblib5$_next;
+    t3 = t2._liblib4$_next;
     if (t3 == null ? t2 == null : t3 === t2) {
       t2 = this._zone;
       t2._openCallbacks = t2._openCallbacks - 1;
@@ -4829,8 +4842,8 @@ _AsBroadcastStream: {"": "Stream;_liblib5$_source,_onListenHandler,_onCancelHand
   _AsBroadcastStream$3: function(_source, _onListenHandler, _onCancelHandler, T) {
     var t1 = new $._AsBroadcastStreamController(null, this.get$_onListen(), this.get$_onCancel(), 0, null, null, null, null);
     $.setRuntimeTypeInfo(t1, [T]);
-    t1._liblib5$_previous = t1;
-    t1._liblib5$_next = t1;
+    t1._liblib4$_previous = t1;
+    t1._liblib4$_next = t1;
     this._controller = t1;
     t1 = this._zone;
     t1._openCallbacks = t1._openCallbacks + 1;
@@ -4888,7 +4901,7 @@ _cancelAndError_closure: {"": "Closure;subscription_0,future_1",
 
 _ForwardingStream: {"": "Stream;",
   get$isBroadcast: function() {
-    return this._liblib5$_source.get$isBroadcast();
+    return this._liblib4$_source.get$isBroadcast();
   },
   listen$4$cancelOnError$onDone$onError: function(onData, cancelOnError, onDone, onError) {
     if (onError == null)
@@ -4904,18 +4917,18 @@ _ForwardingStream: {"": "Stream;",
     return this.listen$4$cancelOnError$onDone$onError(onData, null, onDone, onError);
   },
   _handleData$2: function(data, sink) {
-    sink._liblib5$_add$1(data);
+    sink._liblib4$_add$1(data);
   },
   $asStream: function(S, T) {
     return [T];
   }
 },
 
-_ForwardingStreamSubscription: {"": "_BufferingStreamSubscription;_stream,_subscription,_liblib5$_onData,_onError,_onDone,_zone,_state,_pending",
-  _liblib5$_add$1: function(data) {
+_ForwardingStreamSubscription: {"": "_BufferingStreamSubscription;_stream,_subscription,_liblib4$_onData,_onError,_onDone,_zone,_state,_pending",
+  _liblib4$_add$1: function(data) {
     if ((this._state & 2) !== 0)
       return;
-    $._BufferingStreamSubscription.prototype._liblib5$_add$1.call(this, data);
+    $._BufferingStreamSubscription.prototype._liblib4$_add$1.call(this, data);
   },
   _addError$1: function(error) {
     if ((this._state & 2) !== 0)
@@ -4969,7 +4982,7 @@ _ForwardingStreamSubscription: {"": "_BufferingStreamSubscription;_stream,_subsc
     var t1, t2;
     t1 = this.get$_handleData();
     t2 = this.get$_handleError();
-    this._subscription = this._stream._liblib5$_source.listen$3$onDone$onError(t1, this.get$_handleDone(), t2);
+    this._subscription = this._stream._liblib4$_source.listen$3$onDone$onError(t1, this.get$_handleDone(), t2);
   },
   static: {
 _ForwardingStreamSubscription$: function(_stream, onData, onError, onDone, cancelOnError) {
@@ -4984,7 +4997,7 @@ _ForwardingStreamSubscription$: function(_stream, onData, onError, onDone, cance
 
 },
 
-_WhereStream: {"": "_ForwardingStream;_test,_liblib5$_source",
+_WhereStream: {"": "_ForwardingStream;_test,_liblib4$_source",
   _test$1: function(arg0) {
     return this._test.call$1(arg0);
   },
@@ -5002,14 +5015,14 @@ _WhereStream: {"": "_ForwardingStream;_test,_liblib5$_source",
     }
 
     if (satisfies === true)
-      sink._liblib5$_add$1(inputEvent);
+      sink._liblib4$_add$1(inputEvent);
   },
   $as_ForwardingStream: function(T) {
     return [T, T];
   }
 },
 
-_MapStream: {"": "_ForwardingStream;_transform,_liblib5$_source",
+_MapStream: {"": "_ForwardingStream;_transform,_liblib4$_source",
   _transform$1: function(arg0) {
     return this._transform.call$1(arg0);
   },
@@ -5026,12 +5039,12 @@ _MapStream: {"": "_ForwardingStream;_transform,_liblib5$_source",
       return;
     }
 
-    sink._liblib5$_add$1(outputEvent);
+    sink._liblib4$_add$1(outputEvent);
   },
   $as_ForwardingStream: null
 },
 
-_SkipStream: {"": "_ForwardingStream;_remaining,_liblib5$_source",
+_SkipStream: {"": "_ForwardingStream;_remaining,_liblib4$_source",
   _handleData$2: function(inputEvent, sink) {
     var t1, t2;
     t1 = this._remaining;
@@ -5040,7 +5053,7 @@ _SkipStream: {"": "_ForwardingStream;_remaining,_liblib5$_source",
       this._remaining = t2.$sub(t1, 1);
       return;
     }
-    return sink._liblib5$_add$1(inputEvent);
+    return sink._liblib4$_add$1(inputEvent);
   },
   $as_ForwardingStream: function(T) {
     return [T, T];
@@ -5129,11 +5142,11 @@ _DefaultZone_runAsync_closure: {"": "Closure;f_0,zone_1",
   }
 },
 
-_ZoneTimer: {"": "Object;_zone<,_callback,_timer",
+_ZoneTimer: {"": "Object;_zone<,_liblib4$_callback,_timer",
   _run$0: function() {
     var t1 = this._zone;
     t1._openCallbacks = t1._openCallbacks - 1;
-    t1._runInZone$2(this._callback, true);
+    t1._runInZone$2(this._liblib4$_callback, true);
   },
   get$_run: function() {
     return new $.BoundClosure$0(this, "_run$0", null);
@@ -7724,6 +7737,19 @@ TransitionFunction_linear: function(ratio) {
   return ratio;
 },
 
+TransitionFunction_easeOutElastic: function(ratio) {
+  var t1, t2;
+  t1 = $.getInterceptor(ratio);
+  if (t1.$eq(ratio, 0) || t1.$eq(ratio, 1))
+    return ratio;
+  if (typeof ratio !== "number")
+    throw $.iae(ratio);
+  t1 = -10 * ratio;
+  t1 = Math.pow(2, t1);
+  t2 = (ratio - 0.075) * 6.283185307179586 / 0.3;
+  return t1 * Math.sin(t2) + 1;
+},
+
 _getFontStyleMetrics: function(fontStyle) {
   var t1;
   if (!$.get$_fontStyleMetrics().containsKey$1(fontStyle)) {
@@ -7838,6 +7864,57 @@ _getBoundsTransformedHelper: function(matrix, width, height, returnRectangle) {
   return returnRectangle;
 },
 
+DelayedCall: {"": "Object;_liblib2$_action,_currentTime,_totalTime,_repeatCount",
+  _liblib2$_action$0: function() {
+    return this._liblib2$_action.call$0();
+  },
+  advanceTime$1: function(time) {
+    var t1, newTime;
+    t1 = this._currentTime;
+    if (typeof t1 !== "number")
+      return this.advanceTime$1$bailout(1, time, t1);
+    newTime = t1 + time;
+    while (true) {
+      t1 = this._totalTime;
+      if (typeof t1 !== "number")
+        throw $.iae(t1);
+      if (!(newTime >= t1 && this._repeatCount > 0))
+        break;
+      this._currentTime = t1;
+      this._repeatCount = this._repeatCount - 1;
+      this._liblib2$_action$0();
+      t1 = this._totalTime;
+      if (typeof t1 !== "number")
+        throw $.iae(t1);
+      newTime -= t1;
+    }
+    this._currentTime = newTime;
+    return this._repeatCount > 0;
+  },
+  advanceTime$1$bailout: function(state0, time, t1) {
+    var newTime, t2;
+    newTime = $.$add$ns(t1, time);
+    while (true) {
+      t1 = this._totalTime;
+      t2 = $.getInterceptor$n(newTime);
+      if (typeof t1 !== "number")
+        throw $.iae(t1);
+      if (!(t2.$ge(newTime, t1) && this._repeatCount > 0))
+        break;
+      this._currentTime = t1;
+      this._repeatCount = this._repeatCount - 1;
+      this._liblib2$_action$0();
+      t1 = this._totalTime;
+      if (typeof t1 !== "number")
+        throw $.iae(t1);
+      newTime = t2.$sub(newTime, t1);
+    }
+    this._currentTime = newTime;
+    return this._repeatCount > 0;
+  },
+  $isAnimatable: true
+},
+
 _AnimatableLink: {"": "Object;animatable,nextAnimatableLink"},
 
 Juggler: {"": "Object;_firstAnimatableLink,_lastAnimatableLink,_elapsedTime",
@@ -7878,6 +7955,35 @@ Juggler: {"": "Object;_firstAnimatableLink,_lastAnimatableLink,_elapsedTime",
       }
     }
     return false;
+  },
+  removeTweens$1: function(displayObject) {
+    var link, animatable, t1;
+    link = this._firstAnimatableLink;
+    for (; link !== this._lastAnimatableLink;) {
+      animatable = link.animatable;
+      if (typeof animatable === "object" && animatable !== null && !!$.getInterceptor(animatable).$isTween) {
+        t1 = animatable._displayObject;
+        t1 = t1 == null ? displayObject == null : t1 === displayObject;
+      } else
+        t1 = false;
+      if (t1)
+        link.animatable = null;
+      link = link.nextAnimatableLink;
+    }
+  },
+  tween$3: function(displayObject, time, transitionFunction) {
+    var tween = transitionFunction != null ? $.Tween$(displayObject, time, transitionFunction) : $.Tween$(displayObject, time, $.TransitionFunction_linear$closure);
+    this.add$1(this, tween);
+    return tween;
+  },
+  tween$2: function(displayObject, time) {
+    return this.tween$3(displayObject, time, null);
+  },
+  delayCall$2: function(action, delay) {
+    var delayedCall = new $.DelayedCall(action, 0, 0, 1);
+    delayedCall._totalTime = $.max(delay, 0.0001);
+    this.add$1(this, delayedCall);
+    return delayedCall;
   },
   advanceTime$1: function(time) {
     var link, lastLink, animatable, nextLink;
@@ -8190,6 +8296,7 @@ Tween: {"": "Object;_displayObject,_transitionFunction,_tweenPropertyList,_onSta
     this._roundToInt = false;
     this._started = false;
   },
+  $isTween: true,
   $isAnimatable: true,
   static: {
 Tween$: function(displayObject, time, transitionFunction) {
@@ -8309,8 +8416,8 @@ BitmapData$fromImageElement: function(imageElement, pixelRatio) {
 BitmapData_load: function(url, bitmapDataLoadOptions, pixelRatio) {
   var t1, t2, completer, imageElement, t3, onLoadSubscription, onErrorSubscription;
   t1 = {};
-  t1.pixelRatio_1 = pixelRatio;
   t1.url_0 = url;
+  t1.pixelRatio_1 = pixelRatio;
   bitmapDataLoadOptions = $.get$BitmapData_defaultLoadOptions();
   if ($.get$Stage_autoHiDpi() && bitmapDataLoadOptions.autoHiDpi) {
     if ($.JSString_methods.contains$1(t1.url_0, "@1x.") === true) {
@@ -11039,24 +11146,46 @@ Button$: function(_normal, _hover, _down) {
 
 },
 
+Clock: {"": "Sprite;_resourceManager,_timeLeft,buttonMode,useHandCursor,hitArea,_graphics,_dropTarget,_liblib2$_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,tabEnabled,tabIndex,_liblib2$_id,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_cache,_cacheRectangle,_cacheDebugBorder,_filters,_shadow,_compositeOperation,_name,_parent,_tmpMatrix,_transformationMatrixPrivate,_transformationMatrixRefresh,_eventStreams,_captureEventStreams",
+  Clock$2: function(_resourceManager, _timeLeft) {
+    var t1, t2, background;
+    t1 = this._resourceManager.getBitmapData$1("clock_background");
+    t2 = $.DisplayObject__nextID;
+    $.DisplayObject__nextID = $.$add$ns(t2, 1);
+    background = new $.Bitmap(null, null, null, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, null, false, null, null, null, "", null, $.Matrix$fromIdentity(), $.Matrix$fromIdentity(), true, null, null);
+    background.set$bitmapData(t1);
+    background._pixelSnapping = "auto";
+    background._clipRectangle = null;
+    this.addChild$1(background);
+  },
+  static: {
+Clock$: function(_resourceManager, _timeLeft) {
+  var t1, t2;
+  t1 = $.List_List(null, $.DisplayObject);
+  $.setRuntimeTypeInfo(t1, [$.DisplayObject]);
+  t2 = $.DisplayObject__nextID;
+  $.DisplayObject__nextID = $.$add$ns(t2, 1);
+  t2 = new $.Clock(_resourceManager, _timeLeft, false, false, null, null, null, t1, true, true, false, true, true, 0, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, null, false, null, null, null, "", null, $.Matrix$fromIdentity(), $.Matrix$fromIdentity(), true, null, null);
+  t2.Clock$2(_resourceManager, _timeLeft);
+  return t2;
+}}
+
+},
+
 Hammer: {"": "Sprite;_resourceManager,_background<,_isHitting?,buttonMode,useHandCursor,hitArea,_graphics,_dropTarget,_liblib2$_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,tabEnabled,tabIndex,_liblib2$_id,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_cache,_cacheRectangle,_cacheDebugBorder,_filters,_shadow,_compositeOperation,_name,_parent,_tmpMatrix,_transformationMatrixPrivate,_transformationMatrixRefresh,_eventStreams,_captureEventStreams",
   Hit$1: function(evt) {
-    var rotate, t1;
-    this.SetPosition$1(evt);
+    var t1, t2;
     if (this._isHitting)
       return;
-    rotate = $.Tween$(this._background, 0.2, $.TransitionFunction_linear$closure);
-    t1 = rotate.get$animate();
-    t1.get$rotation;
-    t1._addTweenProperty$1("rotation").targetValue = $.JSDouble_methods.toDouble$0(0.7);
-    rotate.set$onComplete(new $.Hammer_Hit_closure(this));
     this._isHitting = true;
+    this.SetPosition$1(evt);
     t1 = this.get$stage();
-    t1.get$renderLoop;
-    t1 = t1._renderLoop;
     t1.get$juggler;
-    t1 = t1._juggler;
-    t1.add$1(t1, rotate);
+    t1 = t1._juggler.tween$2(this._background, 0.1);
+    t2 = t1.get$animate();
+    t2.get$rotation;
+    t2._addTweenProperty$1("rotation").targetValue = $.JSInt_methods.toDouble$0(1);
+    t1.set$onComplete(new $.Hammer_Hit_closure(this));
   },
   SetPosition$1: function(evt) {
     var t1, t2;
@@ -11114,9 +11243,46 @@ Hammer_Hit_closure: {"": "Closure;this_0",
   }
 },
 
-Hole: {"": "Sprite;_random,_resourceManager,_whack,_awesome,_great,_meng,_isActive,buttonMode,useHandCursor,hitArea,_graphics,_dropTarget,_liblib2$_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,tabEnabled,tabIndex,_liblib2$_id,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_cache,_cacheRectangle,_cacheDebugBorder,_filters,_shadow,_compositeOperation,_name,_parent,_tmpMatrix,_transformationMatrixPrivate,_transformationMatrixRefresh,_eventStreams,_captureEventStreams",
-  _onMouseClick$1: function(evt) {
-    var t1, t2, whack, t3;
+Hole: {"": "Sprite;_random,_resourceManager,_spawnTime,_retreatTime,_stayTime,_whack,_awesome,_great,_overlay<,_meng<,_isActive?,_isRetreating,buttonMode,useHandCursor,hitArea,_graphics,_dropTarget,_liblib2$_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,tabEnabled,tabIndex,_liblib2$_id,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_cache,_cacheRectangle,_cacheDebugBorder,_filters,_shadow,_compositeOperation,_name,_parent,_tmpMatrix,_transformationMatrixPrivate,_transformationMatrixRefresh,_eventStreams,_captureEventStreams",
+  _onEnterFrame$1: function(evt) {
+    if (!this._isActive && this._random.nextInt$1(500) < 1)
+      this.spawnMeng$0();
+  },
+  get$_onEnterFrame: function() {
+    return new $.BoundClosure$1(this, "_onEnterFrame$1", null);
+  },
+  spawnMeng$0: function() {
+    this.addChild$1(this._meng);
+    this.addChild$1(this._overlay);
+    this._isActive = true;
+    this._isRetreating = false;
+    var t1 = this.get$stage();
+    t1.get$juggler;
+    t1 = t1._juggler.tween$3(this._meng, this._spawnTime, $.TransitionFunction_easeOutElastic$closure).get$animate();
+    t1.get$x;
+    t1._addTweenProperty$1("x").targetValue = $.JSInt_methods.toDouble$0(-15);
+    t1 = this.get$stage();
+    t1.get$juggler;
+    t1._juggler.delayCall$2(this.get$retreatMeng(), this._stayTime);
+  },
+  retreatMeng$0: function() {
+    var t1, t2;
+    if (this._isRetreating)
+      return;
+    this._isRetreating = true;
+    t1 = this.get$stage();
+    t1.get$juggler;
+    t1 = t1._juggler.tween$2(this._meng, this._retreatTime);
+    t2 = t1.get$animate();
+    t2.get$x;
+    t2._addTweenProperty$1("x").targetValue = $.JSInt_methods.toDouble$0(5);
+    t1.set$onComplete(new $.Hole_retreatMeng_closure(this));
+  },
+  get$retreatMeng: function() {
+    return new $.BoundClosure$0(this, "retreatMeng$0", null);
+  },
+  showWhack$1: function(evt) {
+    var t1, t2, whack;
     t1 = this._whack;
     t2 = $.DisplayObject__nextID;
     $.DisplayObject__nextID = $.$add$ns(t2, 1);
@@ -11135,35 +11301,25 @@ Hole: {"": "Sprite;_random,_resourceManager,_whack,_awesome,_great,_meng,_isActi
       throw t1.$div();
     whack.set$y(whack, $.$sub$n(t2, t1 / 2));
     this.addChild$1(whack);
-    t1 = $.Duration$(0, 0, 0, 300, 0, 0);
-    t2 = new $._ZoneTimer($.get$_Zone__current(), new $.Hole__onMouseClick_closure(this, whack), null);
-    t3 = t2._zone;
-    t3._openCallbacks = t3._openCallbacks + 1;
-    t2._timer = $._createTimer(t1, t2.get$_run());
+    t1 = this.get$stage();
+    t1.get$juggler;
+    t1._juggler.delayCall$2(new $.Hole_showWhack_closure(this, whack), 0.3);
   },
-  get$_onMouseClick: function() {
-    return new $.BoundClosure$1(this, "_onMouseClick$1", null);
+  whackMeng$1: function(evt) {
+    var t1;
+    if (this._isRetreating)
+      return;
+    this.showWhack$1(evt);
+    t1 = this.get$stage();
+    t1.get$juggler;
+    t1._juggler.removeTweens$1(this._meng);
+    this.retreatMeng$0();
   },
-  _onEnterFrame$1: function(evt) {
-    var tween, t1;
-    if (!this._isActive && this._random.nextInt$1(100) < 1) {
-      this.addChildAt$2(this._meng, 1);
-      tween = $.Tween$(this._meng, 0.5, $.TransitionFunction_linear$closure);
-      t1 = tween.get$animate();
-      t1.get$x;
-      t1._addTweenProperty$1("x").targetValue = $.JSInt_methods.toDouble$0(-15);
-      t1 = this.get$stage();
-      t1.get$juggler;
-      t1 = t1._juggler;
-      t1.add$1(t1, tween);
-      this._isActive = true;
-    }
+  get$whackMeng: function() {
+    return new $.BoundClosure$1(this, "whackMeng$1", null);
   },
-  get$_onEnterFrame: function() {
-    return new $.BoundClosure$1(this, "_onEnterFrame$1", null);
-  },
-  Hole$1: function(_resourceManager) {
-    var t1, t2, t3, background, foreground, overlay;
+  Hole$4: function(_resourceManager, _spawnTime, _retreatTime, _stayTime) {
+    var t1, t2, t3, background, foreground;
     t1 = this._resourceManager;
     t2 = t1.getBitmapData$1("hole");
     t3 = $.DisplayObject__nextID;
@@ -11184,10 +11340,10 @@ Hole: {"": "Sprite;_random,_resourceManager,_whack,_awesome,_great,_meng,_isActi
     $.setRuntimeTypeInfo(t2, [$.DisplayObject]);
     t3 = $.DisplayObject__nextID;
     $.DisplayObject__nextID = $.$add$ns(t3, 1);
-    overlay = new $.Sprite(false, false, null, null, null, t2, true, true, false, true, true, 0, t3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, null, false, null, null, null, "", null, $.Matrix$fromIdentity(), $.Matrix$fromIdentity(), true, null, null);
-    overlay.addChild$1(foreground);
-    overlay.mouseEnabled = false;
-    this.addChild$1(overlay);
+    t3 = new $.Sprite(false, false, null, null, null, t2, true, true, false, true, true, 0, t3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, null, false, null, null, null, "", null, $.Matrix$fromIdentity(), $.Matrix$fromIdentity(), true, null, null);
+    t3.addChild$1(foreground);
+    t3.mouseEnabled = false;
+    this._overlay = t3;
     this._whack = t1.getBitmapData$1("whack");
     this._awesome = t1.getBitmapData$1("awesome");
     this._great = t1.getBitmapData$1("great");
@@ -11204,27 +11360,36 @@ Hole: {"": "Sprite;_random,_resourceManager,_whack,_awesome,_great,_meng,_isActi
     t3._pixelSnapping = "auto";
     t3._clipRectangle = null;
     t2.addChild$1(t3);
-    t2.get$onMouseClick().listen$1(this.get$_onMouseClick());
+    t2.get$onMouseClick().listen$1(this.get$whackMeng());
     t2.set$x(t2, 5);
     t2.set$y(t2, 15);
     this._meng = t2;
     this._getEventStream$2($.EventStreamProvider_enterFrame._liblib2$_eventType, false).listen$1(this.get$_onEnterFrame());
   },
   static: {
-Hole$: function(_resourceManager) {
+Hole$: function(_resourceManager, _spawnTime, _retreatTime, _stayTime) {
   var t1, t2;
   t1 = $.List_List(null, $.DisplayObject);
   $.setRuntimeTypeInfo(t1, [$.DisplayObject]);
   t2 = $.DisplayObject__nextID;
   $.DisplayObject__nextID = $.$add$ns(t2, 1);
-  t2 = new $.Hole($.C__Random, _resourceManager, null, null, null, null, false, false, false, null, null, null, t1, true, true, false, true, true, 0, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, null, false, null, null, null, "", null, $.Matrix$fromIdentity(), $.Matrix$fromIdentity(), true, null, null);
-  t2.Hole$1(_resourceManager);
+  t2 = new $.Hole($.C__Random, _resourceManager, _spawnTime, _retreatTime, _stayTime, null, null, null, null, null, false, false, false, false, null, null, null, t1, true, true, false, true, true, 0, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, null, false, null, null, null, "", null, $.Matrix$fromIdentity(), $.Matrix$fromIdentity(), true, null, null);
+  t2.Hole$4(_resourceManager, _spawnTime, _retreatTime, _stayTime);
   return t2;
 }}
 
 },
 
-Hole__onMouseClick_closure: {"": "Closure;this_0,whack_1",
+Hole_retreatMeng_closure: {"": "Closure;this_0",
+  call$0: function() {
+    var t1 = this.this_0;
+    t1.removeChild$1(t1.get$_meng());
+    t1.removeChild$1(t1.get$_overlay());
+    t1.set$_isActive(false);
+  }
+},
+
+Hole_showWhack_closure: {"": "Closure;this_0,whack_1",
   call$0: function() {
     return this.this_0.removeChild$1(this.whack_1);
   }
@@ -11232,12 +11397,26 @@ Hole__onMouseClick_closure: {"": "Closure;this_0,whack_1",
 
 Level: {"": "Sprite;_resourceManager,level,_random,_leftOffset,_topOffset,buttonMode,useHandCursor,hitArea,_graphics,_dropTarget,_liblib2$_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,tabEnabled,tabIndex,_liblib2$_id,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_cache,_cacheRectangle,_cacheDebugBorder,_filters,_shadow,_compositeOperation,_name,_parent,_tmpMatrix,_transformationMatrixPrivate,_transformationMatrixRefresh,_eventStreams,_captureEventStreams",
   Start$0: function() {
-    var t1, levelSpec, holeData, t2, t3, t4, t5, i, t6, x, j, hole;
+    var t1, levelSpec, t2, scoreBoard, clock, t3, t4, holeData, t5, i, t6, x, j, hole;
     this.DrawBackground$0();
     t1 = this._resourceManager;
     levelSpec = t1.getCustomObject$1("level_" + this.level + "_spec");
-    holeData = t1.getBitmapData$1("hole");
     t2 = $.getInterceptor$x(levelSpec);
+    scoreBoard = $.ScoreBoard$(t1, t2.get$target(levelSpec));
+    scoreBoard.set$x(scoreBoard, 575);
+    scoreBoard.set$y(scoreBoard, 250);
+    this.addChild$1(scoreBoard);
+    clock = $.Clock$(t1, levelSpec.get$timeLimit());
+    t3 = scoreBoard.get$width(scoreBoard);
+    if (typeof t3 !== "number")
+      throw t3.$div();
+    t4 = $.get$width$x(clock.getBoundsTransformed$1(clock.get$_transformationMatrix()));
+    if (typeof t4 !== "number")
+      throw t4.$div();
+    clock.set$x(clock, 575 + t3 / 2 - t4 / 2);
+    clock.set$y(clock, 100);
+    this.addChild$1(clock);
+    holeData = t1.getBitmapData$1("hole");
     t3 = this._topOffset;
     t4 = $.getInterceptor$x(holeData);
     t5 = this._leftOffset;
@@ -11262,7 +11441,7 @@ Level: {"": "Sprite;_resourceManager,level,_random,_leftOffset,_topOffset,button
         t6 = t4.get$height(holeData);
         if (typeof t6 !== "number")
           throw $.iae(t6);
-        hole = $.Hole$(t1);
+        hole = $.Hole$(t1, levelSpec.get$spawnTime(), levelSpec.get$retreatTime(), levelSpec.get$stayTime());
         hole.set$x(hole, x);
         hole.set$y(hole, t3 + 150 * j - t6);
         this.addChild$1(hole);
@@ -11400,52 +11579,62 @@ Level: {"": "Sprite;_resourceManager,level,_random,_leftOffset,_topOffset,button
             }
     }
   },
-  Level$2: function(_resourceManager, level) {
-    this._getEventStream$2($.EventStreamProvider_mouseOver._liblib2$_eventType, false).listen$1(new $.Level_closure());
-    this._getEventStream$2($.EventStreamProvider_mouseMove._liblib2$_eventType, false).listen$1(new $.Level_closure0());
-    this._getEventStream$2($.EventStreamProvider_click._liblib2$_eventType, false).listen$1(new $.Level_closure1());
-    $.Level_Current = this;
-  },
   static: {
 "": "Level_Current",
-Level$: function(_resourceManager, level) {
+}
+
+},
+
+LevelSpec: {"": "Object;columns>,rows>,target*,timeLimit<,spawnTime<,retreatTime<,stayTime<,npcChance,npcs"},
+
+ScoreBoard: {"": "Sprite;_resourceManager,_score,_liblib5$_target,buttonMode,useHandCursor,hitArea,_graphics,_dropTarget,_liblib2$_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,tabEnabled,tabIndex,_liblib2$_id,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_cache,_cacheRectangle,_cacheDebugBorder,_filters,_shadow,_compositeOperation,_name,_parent,_tmpMatrix,_transformationMatrixPrivate,_transformationMatrixRefresh,_eventStreams,_captureEventStreams",
+  DrawTarget$0: function() {
+    var targetHundreds, t1, t2, targetTens, targetOnes;
+    targetHundreds = $.TextField$(null, null);
+    targetHundreds.set$x(targetHundreds, 35);
+    targetHundreds.set$y(targetHundreds, 150);
+    t1 = this._liblib5$_target;
+    t2 = $.getInterceptor$n(t1);
+    targetHundreds.set$text(targetHundreds, $.toString$0(t2.$tdiv(t1, 100)));
+    this.addChild$1(targetHundreds);
+    targetTens = $.TextField$(null, null);
+    targetTens.set$x(targetTens, 75);
+    targetTens.set$y(targetTens, 150);
+    if (typeof t1 !== "number")
+      throw t1.$mod();
+    targetTens.set$text(targetTens, $.JSNumber_methods.toString$0($.JSNumber_methods.$tdiv(t2.$mod(t1, 100), 10)));
+    this.addChild$1(targetTens);
+    targetOnes = $.TextField$(null, null);
+    targetOnes.set$x(targetOnes, 115);
+    targetOnes.set$y(targetOnes, 150);
+    targetOnes.set$text(targetOnes, $.JSNumber_methods.toString$0(t2.$mod(t1, 10)));
+    this.addChild$1(targetOnes);
+  },
+  ScoreBoard$2: function(_resourceManager, _target) {
+    var t1, t2, background;
+    t1 = this._resourceManager.getBitmapData$1("score_board");
+    t2 = $.DisplayObject__nextID;
+    $.DisplayObject__nextID = $.$add$ns(t2, 1);
+    background = new $.Bitmap(null, null, null, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, null, false, null, null, null, "", null, $.Matrix$fromIdentity(), $.Matrix$fromIdentity(), true, null, null);
+    background.set$bitmapData(t1);
+    background._pixelSnapping = "auto";
+    background._clipRectangle = null;
+    this.addChild$1(background);
+    this.DrawTarget$0();
+  },
+  static: {
+ScoreBoard$: function(_resourceManager, _target) {
   var t1, t2;
   t1 = $.List_List(null, $.DisplayObject);
   $.setRuntimeTypeInfo(t1, [$.DisplayObject]);
   t2 = $.DisplayObject__nextID;
   $.DisplayObject__nextID = $.$add$ns(t2, 1);
-  t2 = new $.Level(_resourceManager, level, $.C__Random, 25, 25, false, false, null, null, null, t1, true, true, false, true, true, 0, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, null, false, null, null, null, "", null, $.Matrix$fromIdentity(), $.Matrix$fromIdentity(), true, null, null);
-  t2.Level$2(_resourceManager, level);
+  t2 = new $.ScoreBoard(_resourceManager, 0, _target, false, false, null, null, null, t1, true, true, false, true, true, 0, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, null, false, null, null, null, "", null, $.Matrix$fromIdentity(), $.Matrix$fromIdentity(), true, null, null);
+  t2.ScoreBoard$2(_resourceManager, _target);
   return t2;
 }}
 
 },
-
-Level_closure: {"": "Closure;",
-  call$1: function(evt) {
-    var t1 = $.Hammer_Instance;
-    t1.Move$1;
-    t1.SetPosition$1(evt);
-    return;
-  }
-},
-
-Level_closure0: {"": "Closure;",
-  call$1: function(evt) {
-    var t1 = $.Hammer_Instance;
-    t1.Move$1;
-    t1.SetPosition$1(evt);
-    return;
-  }
-},
-
-Level_closure1: {"": "Closure;",
-  call$1: function(evt) {
-    return $.Hammer_Instance.Hit$1(evt);
-  }
-},
-
-LevelSpec: {"": "Object;columns>,rows>,minScore,timeLimit,targetChance,duration,npcChance,npcs"},
 
 WelcomeScreen: {"": "Sprite;_resourceManager,_background<,buttonMode,useHandCursor,hitArea,_graphics,_dropTarget,_liblib2$_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,tabEnabled,tabIndex,_liblib2$_id,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_cache,_cacheRectangle,_cacheDebugBorder,_filters,_shadow,_compositeOperation,_name,_parent,_tmpMatrix,_transformationMatrixPrivate,_transformationMatrixRefresh,_eventStreams,_captureEventStreams",
   _onStartMouseUp$1: function(_) {
@@ -11509,13 +11698,41 @@ WelcomeScreen$: function(_resourceManager) {
 
 Game: {"": "Sprite;_resourceManager,buttonMode,useHandCursor,hitArea,_graphics,_dropTarget,_liblib2$_children,_mouseChildren,_tabChildren,doubleClickEnabled,mouseEnabled,tabEnabled,tabIndex,_liblib2$_id,_x,_y,_pivotX,_pivotY,_scaleX,_scaleY,_skewX,_skewY,_rotation,_alpha,_visible,_off,_mask,_cache,_cacheRectangle,_cacheDebugBorder,_filters,_shadow,_compositeOperation,_name,_parent,_tmpMatrix,_transformationMatrixPrivate,_transformationMatrixRefresh,_eventStreams,_captureEventStreams",
   _onAddedToStage$1: function(e) {
-    var level = $.Level$(this._resourceManager, 1);
+    var t1, t2, level;
+    t1 = $.List_List(null, $.DisplayObject);
+    $.setRuntimeTypeInfo(t1, [$.DisplayObject]);
+    t2 = $.DisplayObject__nextID;
+    $.DisplayObject__nextID = $.$add$ns(t2, 1);
+    level = new $.Level(this._resourceManager, 1, $.C__Random, 25, 25, false, false, null, null, null, t1, true, true, false, true, true, 0, t2, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, true, false, null, null, null, false, null, null, null, "", null, $.Matrix$fromIdentity(), $.Matrix$fromIdentity(), true, null, null);
+    $.Level_Current = level;
     this.addChild$1(level);
     level.Start$0();
     this.addChild$1($.Hammer_Instance);
+    $.Mouse__isCursorHidden = true;
+    t2 = $.get$Mouse__mouseCursorChangedEvent();
+    if (t2._state >= 4)
+      $.throwExpression(t2._badEventState$0());
+    t2._liblib4$_add$1("hide");
+    this._getEventStream$2($.EventStreamProvider_mouseMove._liblib2$_eventType, false).listen$1(new $.Game__onAddedToStage_closure());
+    this._getEventStream$2($.EventStreamProvider_click._liblib2$_eventType, false).listen$1(new $.Game__onAddedToStage_closure0());
   },
   get$_onAddedToStage: function() {
     return new $.BoundClosure$1(this, "_onAddedToStage$1", null);
+  }
+},
+
+Game__onAddedToStage_closure: {"": "Closure;",
+  call$1: function(evt) {
+    var t1 = $.Hammer_Instance;
+    t1.Move$1;
+    t1.SetPosition$1(evt);
+    return;
+  }
+},
+
+Game__onAddedToStage_closure0: {"": "Closure;",
+  call$1: function(evt) {
+    return $.Hammer_Instance.Hit$1(evt);
   }
 }}],
 ["whack_a_meng.dart", "whack_a_meng.dart", , {
@@ -11534,12 +11751,14 @@ loadResources: function() {
   tileTypes = new $._FutureImpl(0, $.get$_Zone__current(), null);
   tileTypes._state = 8;
   tileTypes._resultOrListeners = ["arctic", "arid", "sand", "snow", "spooky", "temperate", "tropical"];
-  lvl1 = new $.LevelSpec(null, null, null, null, null, null, null, null);
+  lvl1 = new $.LevelSpec(null, null, null, null, null, null, null, null, null);
   lvl1.columns = 3;
   lvl1.rows = 3;
-  lvl1.minScore = 10;
+  lvl1.target = 10;
   lvl1.timeLimit = 30;
-  lvl1.duration = 3;
+  lvl1.spawnTime = 5;
+  lvl1.retreatTime = 0.2;
+  lvl1.stayTime = 5;
   t1 = new $.HashMap(0, null, null, null, null);
   $.setRuntimeTypeInfo(t1, [$.JSString, $.ResourceManagerResource]);
   t1 = new $.ResourceManager(t1, null, null);
@@ -11572,6 +11791,8 @@ loadResources: function() {
   t1.addBitmapData$2("start", "images/START.png");
   t1.addBitmapData$2("start_hover", "images/START_HOVER.png");
   t1.addBitmapData$2("start_click", "images/START_DOWN.png");
+  t1.addBitmapData$2("clock_background", "images/CLOCK_BACKGROUND.png");
+  t1.addBitmapData$2("score_board", "images/SCORE_BOARD.png");
   t2 = new $._FutureImpl(0, $.get$_Zone__current(), null);
   t2._state = 8;
   t2._resultOrListeners = lvl1;
@@ -11696,6 +11917,7 @@ $._nullErrorHandler$closure = new $.Closure$_nullErrorHandler($._nullErrorHandle
 $._nullDoneHandler$closure = new $.Closure$_nullDoneHandler($._nullDoneHandler, "_nullDoneHandler$closure");
 $.Element__determineMouseWheelEventType$closure = new $.Closure$_determineMouseWheelEventType($.Element__determineMouseWheelEventType, "Element__determineMouseWheelEventType$closure");
 $.TransitionFunction_linear$closure = new $.Closure$linear($.TransitionFunction_linear, "TransitionFunction_linear$closure");
+$.TransitionFunction_easeOutElastic$closure = new $.Closure$easeOutElastic($.TransitionFunction_easeOutElastic, "TransitionFunction_easeOutElastic$closure");
 $.main$closure = new $.Closure$main($.main, "main$closure");
 $.DisplayObject.$isDisplayObject = true;
 $.Stage.$isDisplayObject = true;

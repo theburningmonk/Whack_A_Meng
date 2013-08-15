@@ -18,6 +18,8 @@ class Hole extends Sprite {
   bool _isActive = false;
   bool _isRetreating = false;
 
+  StreamController _mengWhackedController;
+
   Hole(this._resourceManager, this._spawnTime, this._retreatTime, this._stayTime) {
     Bitmap background = new Bitmap(_resourceManager.getBitmapData("hole"));
     Bitmap foreground = new Bitmap(_resourceManager.getBitmapData("hole_over"));
@@ -39,7 +41,11 @@ class Hole extends Sprite {
         ..y = 15;
 
     this.onEnterFrame.listen(_onEnterFrame);
+
+    _mengWhackedController = new StreamController.broadcast();
   }
+
+  Stream get onMengWhacked => _mengWhackedController.stream;
 
   _onEnterFrame(EnterFrameEvent evt) {
     if (!_isActive && _random.nextInt(500) < 1) {
@@ -93,6 +99,8 @@ class Hole extends Sprite {
     }
 
     showWhack(evt);
+
+    _mengWhackedController.add(this);
 
     stage.juggler.removeTweens(_meng);
     retreatMeng();

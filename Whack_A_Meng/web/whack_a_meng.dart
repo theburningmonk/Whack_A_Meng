@@ -63,6 +63,22 @@ void loadResources() {
       ..addBitmapData("bashak", "images/BASHAK.png")
       ..addBitmapData("meng",   "images/MENG.png")
 
+      // NPCs
+      ..addBitmapData("gnome",  "images/MARKETPLACE_MONSTER_GNOME.png")
+      ..addBitmapData("goblin", "images/MARKETPLACE_MONSTER_GOBLIN_GARDEN.png")
+      ..addBitmapData("gui",    "images/MARKETPLACE_MONSTER_GUI.png")
+      ..addBitmapData("taotie", "images/MARKETPLACE_MONSTER_TAOTIE.png")
+      ..addBitmapData("yeti",   "images/MARKETPLACE_MONSTER_YETI.png")
+      ..addBitmapData("mermaid_blonde",   "images/MARKETPLACE_MONSTER_MERMAID_BLONDE.png")
+      ..addBitmapData("mermaid_red",      "images/MARKETPLACE_MONSTER_MERMAID_RED.png")
+      ..addBitmapData("pixie_banksia",    "images/MARKETPLACE_MONSTER_PIXIE_BANKSIA.png")
+      ..addBitmapData("pixie_dandelion",  "images/MARKETPLACE_MONSTER_PIXIE_DANDELION.png")
+      ..addBitmapData("pixie_orchid",     "images/MARKETPLACE_MONSTER_PIXIE_ORCHID.png")
+      ..addBitmapData("selkie_blonde",    "images/MARKETPLACE_MONSTER_SELKIE_BLONDE.png")
+      ..addBitmapData("selkie_red",       "images/MARKETPLACE_MONSTER_SELKIE_RED.png")
+      ..addBitmapData("selkie_violet",    "images/MARKETPLACE_MONSTER_SELKIE_VIOLET.png")
+      ..addBitmapData("vege_lamb",        "images/MARKETPLACE_MONSTER_VEGETABLELAMB.png")
+
       // background tiles
       ..addBitmapData("arctic_plain", "images/TILE_ARCTIC_PLAIN.png")
       ..addBitmapData("arctic_river", "images/TILE_ARCTIC_RIVER.png")

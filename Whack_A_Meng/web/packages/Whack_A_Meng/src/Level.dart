@@ -25,10 +25,8 @@ class Level extends Sprite {
       ..y = 250;
     addChild(scoreBoard);
 
-    Clock clock = new Clock(_resourceManager, levelSpec.timeLimit);
-    clock
-      // align the center of the clock and scoreboard
-      ..x = 575 + scoreBoard.width / 2 - clock.width / 2
+    Clock clock = new Clock(_resourceManager, levelSpec.timeLimit)
+      ..x = 605
       ..y = 100;
     addChild(clock);
 
@@ -43,9 +41,14 @@ class Level extends Sprite {
         Hole hole = new Hole(_resourceManager, levelSpec.spawnTime, levelSpec.retreatTime, levelSpec.stayTime)
                           ..x = x
                           ..y = y;
+        hole.onMengWhacked.listen((_) => scoreBoard.Increment());
         addChild(hole);
       }
     }
+
+    StraightWalk walk = new StraightWalk(_resourceManager);
+    addChild(walk);
+    walk.Visit().then((_) => removeChild(walk));
   }
 
   DrawBackground() {

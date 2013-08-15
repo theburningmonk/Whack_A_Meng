@@ -14,6 +14,7 @@ part "src/State.dart";
 part "src/Hammer.dart";
 part "src/Clock.dart";
 part "src/ScoreBoard.dart";
+part "src/NpcVisit.dart";
 
 class Game extends Sprite {
   ResourceManager _resourceManager;
