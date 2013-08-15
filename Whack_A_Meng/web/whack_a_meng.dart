@@ -16,7 +16,7 @@ void main() {
   stage = new Stage("Stage", html.query('#stage'));
   renderLoop = new RenderLoop();
   renderLoop.addStage(stage);
-  
+
   resourceManager = new ResourceManager();
 
   BitmapData.load("images/LOADING.png").then((bitmapData) {
@@ -49,61 +49,65 @@ void main() {
 void loadResources() {
   Future<List<String>> tileTypes = new Future.value([ "arctic", "arid", "sand", "snow", "spooky", "temperate", "tropical" ]);
   LevelSpec lvl1 = new LevelSpec()
-                        ..columns = 3
-                        ..rows = 3
-                        ..minScore = 10
-                        ..timeLimit = 30
-                        ..duration = 3.0;
-  
+                        ..columns     = 3
+                        ..rows        = 3
+                        ..target      = 10
+                        ..timeLimit   = 30
+                        ..spawnTime   = 5.0
+                        ..retreatTime = 0.2
+                        ..stayTime    = 5.0;
+
   resourceManager = new ResourceManager()
-  
+
       // character headshots
       ..addBitmapData("bashak", "images/BASHAK.png")
-      ..addBitmapData("meng", "images/MENG.png")
-      
+      ..addBitmapData("meng",   "images/MENG.png")
+
       // background tiles
       ..addBitmapData("arctic_plain", "images/TILE_ARCTIC_PLAIN.png")
       ..addBitmapData("arctic_river", "images/TILE_ARCTIC_RIVER.png")
-      ..addBitmapData("arid_plain", "images/TILE_ARID_PLAIN.png")
-      ..addBitmapData("arid_river", "images/TILE_ARID_RIVER.png")
-      ..addBitmapData("sand_plain", "images/TILE_SAND_PLAIN.png")
-      ..addBitmapData("sand_river", "images/TILE_SAND_RIVER.png")
-      ..addBitmapData("snow_plain", "images/TILE_SNOW_PLAIN.png")
-      ..addBitmapData("snow_river", "images/TILE_SNOW_RIVER.png")
+      ..addBitmapData("arid_plain",   "images/TILE_ARID_PLAIN.png")
+      ..addBitmapData("arid_river",   "images/TILE_ARID_RIVER.png")
+      ..addBitmapData("sand_plain",   "images/TILE_SAND_PLAIN.png")
+      ..addBitmapData("sand_river",   "images/TILE_SAND_RIVER.png")
+      ..addBitmapData("snow_plain",   "images/TILE_SNOW_PLAIN.png")
+      ..addBitmapData("snow_river",   "images/TILE_SNOW_RIVER.png")
       ..addBitmapData("spooky_plain", "images/TILE_SPOOKY_PLAIN.png")
       ..addBitmapData("spooky_river", "images/TILE_SPOOKY_RIVER.png")
-      ..addBitmapData("temperate_plain", "images/TILE_TEMPERATE_PLAIN.png")
-      ..addBitmapData("temperate_river", "images/TILE_TEMPERATE_RIVER.png")
-      ..addBitmapData("tropical_plain", "images/TILE_TROPICAL_PLAIN.png")
-      ..addBitmapData("tropical_river", "images/TILE_TROPICAL_RIVER.png")
+      ..addBitmapData("temperate_plain",  "images/TILE_TEMPERATE_PLAIN.png")
+      ..addBitmapData("temperate_river",  "images/TILE_TEMPERATE_RIVER.png")
+      ..addBitmapData("tropical_plain",   "images/TILE_TROPICAL_PLAIN.png")
+      ..addBitmapData("tropical_river",   "images/TILE_TROPICAL_RIVER.png")
       ..addCustomObject("tile_types", tileTypes)
-      
+
       // graphical assets
-      ..addBitmapData("welcome", "images/WELCOME.png")
-      ..addBitmapData("hole", "images/MARKETPLACE_ENV_HOLE_RABBIT.png")
-      ..addBitmapData("hole_over", "images/MARKETPLACE_ENV_HOLE_RABBIT_OVER.png")
-      ..addBitmapData("hammer", "images/HAMMER.png")
-      ..addBitmapData("whack", "images/WHACK.png")
-      ..addBitmapData("great", "images/GREAT.png")
-      ..addBitmapData("awesome", "images/AWESOME.png")
-      ..addBitmapData("ouch", "images/OUCH.png")
-      ..addBitmapData("wood_sign", "images/WOOD_SIGN.png")
-      ..addBitmapData("start", "images/START.png")
-      ..addBitmapData("start_hover", "images/START_HOVER.png")
-      ..addBitmapData("start_click", "images/START_DOWN.png")
-      
+      ..addBitmapData("welcome",      "images/WELCOME.png")
+      ..addBitmapData("hole",         "images/MARKETPLACE_ENV_HOLE_RABBIT.png")
+      ..addBitmapData("hole_over",    "images/MARKETPLACE_ENV_HOLE_RABBIT_OVER.png")
+      ..addBitmapData("hammer",       "images/HAMMER.png")
+      ..addBitmapData("whack",        "images/WHACK.png")
+      ..addBitmapData("great",        "images/GREAT.png")
+      ..addBitmapData("awesome",      "images/AWESOME.png")
+      ..addBitmapData("ouch",         "images/OUCH.png")
+      ..addBitmapData("wood_sign",    "images/WOOD_SIGN.png")
+      ..addBitmapData("start",        "images/START.png")
+      ..addBitmapData("start_hover",  "images/START_HOVER.png")
+      ..addBitmapData("start_click",  "images/START_DOWN.png")
+      ..addBitmapData("clock_background", "images/CLOCK_BACKGROUND.png")
+      ..addBitmapData("score_board",      "images/SCORE_BOARD.png")
+
       // levels
       ..addCustomObject("level_1_spec", new Future.value(lvl1));
-  
+
   resourceManager.load().then((_) {
 
     stage.removeChild(loadingBitmap);
     stage.removeChild(loadingTextField);
     renderLoop.juggler.remove(loadingBitmapTween);
-    
+
     WelcomeScreen welcome = new WelcomeScreen(resourceManager);
     stage.addChild(welcome);
-    
+
     welcome.onRemovedFromStage.listen((_) {
       Game game = new Game(resourceManager);
       stage.addChild(game);

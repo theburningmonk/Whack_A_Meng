@@ -30,17 +30,16 @@ class Hammer extends Sprite {
       return;
     }
     
+    _isHitting = true;
+    
     SetPosition(evt);
     
-    Tween rotate = new Tween(_background, 0.2)
-      ..animate.rotation.to(0.7)
+    stage.juggler.tween(_background, 0.1)
+      ..animate.rotation.to(1.0)
       ..onComplete = () {
         _background.rotation = 0.0;
         _isHitting = false;
       };
-      
-    _isHitting = true;
-    stage.renderLoop.juggler.add(rotate);       
   }
   
   SetPosition(MouseEvent evt) {

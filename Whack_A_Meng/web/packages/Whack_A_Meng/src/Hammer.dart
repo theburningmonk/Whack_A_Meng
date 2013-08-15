@@ -11,7 +11,7 @@ class Hammer extends Sprite {
   Hammer(this._resourceManager) {
     _background = new Sprite()
       ..addChild(new Bitmap(_resourceManager.getBitmapData("hammer")))
-      ..mouseEnabled = false;   
+      ..mouseEnabled = false;
     
     _background.pivotX = _background.width;
     _background.pivotY = _background.height;
@@ -25,22 +25,21 @@ class Hammer extends Sprite {
     SetPosition(evt);
   }
   
-  Hit(MouseEvent evt) {      
-    SetPosition(evt);
-    
+  Hit(MouseEvent evt) {
     if (_isHitting) {
       return;
     }
     
-    Tween rotate = new Tween(_background, 0.2)
-      ..animate.rotation.to(0.7)
+    _isHitting = true;
+    
+    SetPosition(evt);
+    
+    stage.juggler.tween(_background, 0.1)
+      ..animate.rotation.to(1.0)
       ..onComplete = () {
         _background.rotation = 0.0;
         _isHitting = false;
       };
-      
-    _isHitting = true;
-    stage.renderLoop.juggler.add(rotate);       
   }
   
   SetPosition(MouseEvent evt) {
