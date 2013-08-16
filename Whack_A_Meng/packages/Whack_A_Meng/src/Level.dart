@@ -49,6 +49,10 @@ class Level extends Sprite {
     StraightWalk walk = new StraightWalk(_resourceManager);
     addChild(walk);
     walk.Visit().then((_) => removeChild(walk));
+
+    NpcVisit water = new WaterVisit(_resourceManager);
+    addChild(water);
+    water.Visit().then((_) => removeChild(water));
   }
 
   DrawBackground() {

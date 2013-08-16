@@ -69,6 +69,8 @@ void loadResources() {
       ..addBitmapData("gui",    "images/MARKETPLACE_MONSTER_GUI.png")
       ..addBitmapData("taotie", "images/MARKETPLACE_MONSTER_TAOTIE.png")
       ..addBitmapData("yeti",   "images/MARKETPLACE_MONSTER_YETI.png")
+      ..addBitmapData("meng_npc",         "images/MARKETPLACE_MONSTER_MOGWAI.png")
+      ..addBitmapData("drop_bear",        "images/MARKETPLACE_MONSTER_DROPBEAR.png")
       ..addBitmapData("mermaid_blonde",   "images/MARKETPLACE_MONSTER_MERMAID_BLONDE.png")
       ..addBitmapData("mermaid_red",      "images/MARKETPLACE_MONSTER_MERMAID_RED.png")
       ..addBitmapData("pixie_banksia",    "images/MARKETPLACE_MONSTER_PIXIE_BANKSIA.png")
