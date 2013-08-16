@@ -13,10 +13,10 @@ abstract class NpcVisit extends Sprite {
   ResourceManager resourceManager;
 
   NpcVisit(this.resourceManager) {
-    npc = _PickNpc();
+    npc = _pickNpc();
     addChild(npc);
 
-    direction = _ChooseDirection();
+    direction = _chooseDirection();
     if (direction == Direction.LeftToRight) {
       // all images are facing left, so when going from left to right, flip the
       // npc image horizontally
@@ -24,16 +24,16 @@ abstract class NpcVisit extends Sprite {
     }
   }
 
-  List<String> GetNpcList();
+  List<String> getNpcList();
 
-  _PickNpc() {
-    List<String> npcs = GetNpcList();
+  _pickNpc() {
+    List<String> npcs = getNpcList();
     String npcName = npcs[random.nextInt(npcs.length)];
     BitmapData background = resourceManager.getBitmapData(npcName);
     return new Bitmap(background);
   }
 
-  int _ChooseDirection() {
+  int _chooseDirection() {
     // if next bool = true then go from right to left
     if (random.nextBool())
     {
@@ -44,7 +44,7 @@ abstract class NpcVisit extends Sprite {
     }
   }
 
-  Future<NpcVisit> Visit();
+  Future<NpcVisit> visit();
 }
 
 class StraightWalk extends NpcVisit {
@@ -55,11 +55,11 @@ class StraightWalk extends NpcVisit {
   StraightWalk(ResourceManager resourceManager) : super(resourceManager) {
   }
 
-  List<String> GetNpcList() {
+  List<String> getNpcList() {
     return _npcs;
   }
 
-  Future<NpcVisit> Visit() {
+  Future<NpcVisit> visit() {
     this.y = random.nextInt((550 - npc.height).toInt());
 
     if (direction == Direction.RightToLeft) {
@@ -87,11 +87,11 @@ class WaterVisit extends NpcVisit {
   WaterVisit(ResourceManager resourceManager) : super(resourceManager) {
   }
 
-  List<String> GetNpcList() {
+  List<String> getNpcList() {
     return _npcs;
   }
 
-  Future<NpcVisit> Visit() {
+  Future<NpcVisit> visit() {
     this.y = stage.height;
     int toY = (600 - npc.height).toInt();
 
@@ -110,5 +110,21 @@ class WaterVisit extends NpcVisit {
       };
 
     return completer.future;
+  }
+}
+
+class NpcVisitScheduler {
+  ResourceManager _resourceManager;
+  DisplayObjectContainer _container;
+
+  NpcVisitScheduler(this._resourceManager, this._container) {
+  }
+
+  start() {
+
+  }
+
+  stop() {
+
   }
 }

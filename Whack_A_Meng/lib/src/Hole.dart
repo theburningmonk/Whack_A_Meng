@@ -18,6 +18,8 @@ class Hole extends Sprite {
   bool _isActive = false;
   bool _isRetreating = false;
 
+  StreamSubscription<EnterFrameEvent> _enterFrameSub;
+
   StreamController _mengWhackedController;
 
   Hole(this._resourceManager, this._spawnTime, this._retreatTime, this._stayTime) {
@@ -36,11 +38,11 @@ class Hole extends Sprite {
 
     _meng = new Sprite()
         ..addChild(new Bitmap(_resourceManager.getBitmapData("meng")))
-        ..onMouseClick.listen(whackMeng)
+        ..onMouseClick.listen(_whackMeng)
         ..x = 5
         ..y = 15;
 
-    this.onEnterFrame.listen(_onEnterFrame);
+    _enterFrameSub = this.onEnterFrame.listen(_onEnterFrame);
 
     _mengWhackedController = new StreamController.broadcast();
   }
@@ -49,11 +51,17 @@ class Hole extends Sprite {
 
   _onEnterFrame(EnterFrameEvent evt) {
     if (!_isActive && _random.nextInt(500) < 1) {
-      spawnMeng();
+      _spawnMeng();
     }
   }
 
-  spawnMeng() {
+  disable() {
+    _enterFrameSub.cancel();
+    stage.juggler.removeTweens(_meng);
+    _retreatMeng();
+  }
+
+  _spawnMeng() {
     addChild(_meng);
     addChild(_overlay);
 
@@ -63,10 +71,10 @@ class Hole extends Sprite {
     stage.juggler.tween(_meng, _spawnTime, TransitionFunction.easeOutElastic)
       ..animate.x.to(-15);
 
-    stage.juggler.delayCall(retreatMeng, _stayTime);
+    stage.juggler.delayCall(_retreatMeng, _stayTime);
   }
 
-  retreatMeng() {
+  _retreatMeng() {
     if (_isRetreating) {
       return;
     }
@@ -82,7 +90,7 @@ class Hole extends Sprite {
     };
   }
 
-  showWhack(MouseEvent evt) {
+  _showWhack(MouseEvent evt) {
     var whack = new Bitmap(_whack);
 
     whack.x = evt.localX - _whack.width / 2;
@@ -93,16 +101,16 @@ class Hole extends Sprite {
     stage.juggler.delayCall(() => removeChild(whack), 0.3);
   }
 
-  whackMeng(MouseEvent evt) {
+  _whackMeng(MouseEvent evt) {
     if (_isRetreating) {
       return;
     }
 
-    showWhack(evt);
+    _showWhack(evt);
 
     _mengWhackedController.add(this);
 
     stage.juggler.removeTweens(_meng);
-    retreatMeng();
+    _retreatMeng();
   }
 }

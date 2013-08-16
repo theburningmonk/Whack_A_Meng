@@ -9,14 +9,16 @@ class Level extends Sprite {
   int _leftOffset = 25;
   int _topOffset = 25;
 
+  List<Hole> _holes = new List<Hole>();
+
   static Level Current;
 
   Level(this._resourceManager, this.level) {
     Current = this;
   }
 
-  Start() {
-    DrawBackground();
+  start() {
+    _drawBackground();
 
     LevelSpec levelSpec = _resourceManager.getCustomObject("level_${level}_spec");
 
@@ -41,21 +43,25 @@ class Level extends Sprite {
         Hole hole = new Hole(_resourceManager, levelSpec.spawnTime, levelSpec.retreatTime, levelSpec.stayTime)
                           ..x = x
                           ..y = y;
-        hole.onMengWhacked.listen((_) => scoreBoard.Increment());
+        hole.onMengWhacked.listen((_) => scoreBoard.increment());
+        _holes.add(hole);
+
         addChild(hole);
       }
     }
 
     StraightWalk walk = new StraightWalk(_resourceManager);
     addChild(walk);
-    walk.Visit().then((_) => removeChild(walk));
+    walk.visit().then((_) => removeChild(walk));
 
     NpcVisit water = new WaterVisit(_resourceManager);
     addChild(water);
-    water.Visit().then((_) => removeChild(water));
+    water.visit().then((_) => removeChild(water));
+
+    clock.start().then(_timeUp);
   }
 
-  DrawBackground() {
+  _drawBackground() {
     List<String> tileTypes = _resourceManager.getCustomObject("tile_types");
     String tileType = tileTypes[_random.nextInt(tileTypes.length)];
     BitmapData tileData = _resourceManager.getBitmapData("${tileType}_plain");
@@ -80,6 +86,12 @@ class Level extends Sprite {
         ..x = x
         ..y = tileData.height * (vTiles-1);
       addChild(river);
+    }
+  }
+
+  _timeUp(_) {
+    for (var hole in _holes) {
+      hole.disable();
     }
   }
 }

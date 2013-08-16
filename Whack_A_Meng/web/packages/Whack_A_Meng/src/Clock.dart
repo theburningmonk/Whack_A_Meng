@@ -9,6 +9,22 @@ class Clock extends Sprite {
     addChild(background);
   }
 
-  Start() {
+  Future start() {
+    var completer = new Completer<NpcVisit>();
+
+    DelayedCall timerAction = new DelayedCall(() {
+      _timeLeft--;
+
+      print(_timeLeft);
+
+      if (_timeLeft == 0) {
+        completer.complete();
+      }
+    }, 1.0)
+      ..repeatCount = _timeLeft;
+
+    stage.juggler.add(timerAction);
+
+    return completer.future;
   }
 }

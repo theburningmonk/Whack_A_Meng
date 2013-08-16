@@ -18,14 +18,14 @@ class ScoreBoard extends Sprite {
     Bitmap background = new Bitmap(_resourceManager.getBitmapData("score_board"));
     addChild(background);
 
-    Draw(_target, 150, _targetColor);
-    List<TextField> scoreParts = Draw(_score, 55, _scoreColor);
+    _draw(_target, 150, _targetColor);
+    List<TextField> scoreParts = _draw(_score, 55, _scoreColor);
     _scoreHundreds = scoreParts[0];
     _scoreTens     = scoreParts[1];
     _scoreOnes     = scoreParts[2];
   }
 
-  Draw(int score, int y, int color) {
+  _draw(int score, int y, int color) {
     TextFormat textFormat = new TextFormat("Calibri", 30, color, bold : true);
 
     TextField hundreds = new TextField()
@@ -52,19 +52,19 @@ class ScoreBoard extends Sprite {
     return [ hundreds, tens, ones ];
   }
 
-  DrawScore() {
+  _drawScore() {
     _scoreHundreds.text = (_score ~/ 100).toString();
     _scoreTens.text     = (_score % 100 ~/ 10).toString();
     _scoreOnes.text     = (_score % 10).toString();
   }
 
-  Increment() {
+  increment() {
     _score += 1;
-    DrawScore();
+    _drawScore();
   }
 
-  Decrement() {
+  decrement() {
     _score -= 1;
-    DrawScore();
+    _drawScore();
   }
 }

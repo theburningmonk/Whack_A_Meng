@@ -27,12 +27,12 @@ class Game extends Sprite {
   _onAddedToStage(Event e) {
     Level level = new Level(_resourceManager, 1);
     addChild(level);
-    level.Start();
+    level.start();
 
     addChild(Hammer.Instance);
     Mouse.hide();
 
-    onMouseMove.listen((evt) => Hammer.Instance.Move(evt));
-    onMouseClick.listen((evt) => Hammer.Instance.Hit(evt));
+    onMouseMove.listen((evt) => Hammer.Instance.move(evt));
+    onMouseClick.listen((evt) => Hammer.Instance.hit(evt));
   }
 }
