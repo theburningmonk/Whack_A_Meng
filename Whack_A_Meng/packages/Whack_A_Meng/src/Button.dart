@@ -4,27 +4,27 @@ class Button extends Sprite {
   Bitmap _normal;
   Bitmap _hover;
   Bitmap _down;
-  
+
   Button(this._normal, this._hover, this._down) {
-    this.onMouseOver.listen(_onMouseOver);
-    this.onMouseOut.listen(_onMouseOut);
-    this.onMouseDown.listen(_onMouseDown);
-    
-    this.addChild(_normal);
+    onMouseOver.listen(_onMouseOver);
+    onMouseOut.listen(_onMouseOut);
+    onMouseDown.listen(_onMouseDown);
+
+    addChild(_normal);
   }
-  
+
   _onMouseOver(_) {
-    this.removeChildren(0);
-    this.addChild(_hover);
+    removeChildren(0);
+    addChild(_hover);
   }
-  
+
   _onMouseOut(_) {
-    this.removeChildren(0);
-    this.addChild(_normal);
+    removeChildren(0);
+    addChild(_normal);
   }
-  
+
   _onMouseDown(_) {
-    this.removeChildren(0);
-    this.addChild(_down);
+    removeChildren(0);
+    addChild(_down);
   }
 }

@@ -20,7 +20,7 @@ class Game extends Sprite {
   ResourceManager _resourceManager;
 
   Game(this._resourceManager) {
-    this.onAddedToStage.listen(_onAddedToStage);
+    onAddedToStage.listen(_onAddedToStage);
     new Hammer(_resourceManager);
   }
 

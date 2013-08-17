@@ -11,7 +11,6 @@ class LevelSpec {
   num retreatTime;  // num of seconds meng will retreat in (smaller = faster)
   num stayTime;     // num of seconds meng will stay in the open for
 
-  num npcChance;    // probability (0.0 - 1.0) of a NPC showing up instead of meng
-
-  List<String> npcs;  // NPCs that can show up in this level
+  int maxConcurrentNpc; // the number of NPCs that can visit at the same time
+  num npcSpawnProb;     // probability (0.0 - 1.0) of a NPC visiting on each frame
 }

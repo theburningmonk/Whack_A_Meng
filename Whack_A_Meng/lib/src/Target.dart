@@ -4,7 +4,7 @@ abstract class Target extends Sprite {
   ResourceManager _resourceManager;
 
   Target(this._resourceManager) {
-    this.onMouseClick.listen(onMouseClickHander);
+    onMouseClick.listen(onMouseClickHander);
   }
 
   void onMouseClickHander(Event e);
@@ -23,7 +23,7 @@ class Meng extends Target {
 class NPC extends Target {
   String name;
 
-  NPC(this.name, resourceManager) : super(resourceManager) {
+  NPC(name, resourceManager) : super(resourceManager) {
     addChild(new Bitmap(_resourceManager.getBitmapData(name)));
   }
 

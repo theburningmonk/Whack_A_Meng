@@ -49,14 +49,17 @@ class Level extends Sprite {
         addChild(hole);
       }
     }
+//
+//    StraightWalk walk = new StraightWalk(_resourceManager);
+//    addChild(walk);
+//    walk.visit().then((_) => removeChild(walk));
+//
+//    NpcVisit water = new WaterVisit(_resourceManager);
+//    addChild(water);
+//    water.visit().then((_) => removeChild(water));
 
-    StraightWalk walk = new StraightWalk(_resourceManager);
-    addChild(walk);
-    walk.visit().then((_) => removeChild(walk));
-
-    NpcVisit water = new WaterVisit(_resourceManager);
-    addChild(water);
-    water.visit().then((_) => removeChild(water));
+    new NpcVisitScheduler(_resourceManager, this, maxConcurrent : levelSpec.maxConcurrentNpc, spawnProb : levelSpec.npcSpawnProb)
+          .start();
 
     clock.start().then(_timeUp);
   }

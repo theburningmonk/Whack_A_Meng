@@ -42,7 +42,7 @@ class Hole extends Sprite {
         ..x = 5
         ..y = 15;
 
-    _enterFrameSub = this.onEnterFrame.listen(_onEnterFrame);
+    _enterFrameSub = onEnterFrame.listen(_onEnterFrame);
 
     _mengWhackedController = new StreamController.broadcast();
   }
@@ -57,8 +57,6 @@ class Hole extends Sprite {
 
   disable() {
     _enterFrameSub.cancel();
-    stage.juggler.removeTweens(_meng);
-    _retreatMeng();
   }
 
   _spawnMeng() {

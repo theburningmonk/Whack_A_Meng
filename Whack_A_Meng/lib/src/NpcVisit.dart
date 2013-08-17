@@ -47,12 +47,12 @@ abstract class NpcVisit extends Sprite {
   Future<NpcVisit> visit();
 }
 
-class StraightWalk extends NpcVisit {
+class Walker extends NpcVisit {
   List<String> _npcs = [ "gnome", "gui", "taotie", "yeti", "drop_bear", "meng_npc",
                         "pixie_banksia", "pixie_dandelion", "pixie_orchid" ];
   num _toX;
 
-  StraightWalk(ResourceManager resourceManager) : super(resourceManager) {
+  Walker(ResourceManager resourceManager) : super(resourceManager) {
   }
 
   List<String> getNpcList() {
@@ -80,11 +80,11 @@ class StraightWalk extends NpcVisit {
   }
 }
 
-class WaterVisit extends NpcVisit {
+class Swimmer extends NpcVisit {
   List<String> _npcs = [ "mermaid_blonde", "mermaid_red",
                          "selkie_blonde", "selkie_red", "selkie_violet" ];
 
-  WaterVisit(ResourceManager resourceManager) : super(resourceManager) {
+  Swimmer(ResourceManager resourceManager) : super(resourceManager) {
   }
 
   List<String> getNpcList() {
@@ -92,10 +92,10 @@ class WaterVisit extends NpcVisit {
   }
 
   Future<NpcVisit> visit() {
-    this.y = stage.height;
+    y = stage.height;
     int toY = (600 - npc.height).toInt();
 
-    this.x = random.nextInt((800 - npc.width).toInt());
+    x = random.nextInt((800 - npc.width).toInt());
 
     var completer = new Completer<NpcVisit>();
 
@@ -113,18 +113,57 @@ class WaterVisit extends NpcVisit {
   }
 }
 
-class NpcVisitScheduler {
+typedef NpcVisit GenVisitor();
+
+class NpcVisitScheduler extends Sprite {
   ResourceManager _resourceManager;
   DisplayObjectContainer _container;
 
-  NpcVisitScheduler(this._resourceManager, this._container) {
+  int _maxConcurrent;
+  int _current = 0;
+  double _spawnProb;
+
+  List _generators;
+  Random _random = new Random();
+
+  StreamSubscription _enterFrameSub;
+
+  NpcVisitScheduler(this._resourceManager, this._container, { int maxConcurrent, double spawnProb }) {
+    if (maxConcurrent == null) {
+      _maxConcurrent = 1;
+    } else {
+      _maxConcurrent = maxConcurrent;
+    }
+
+    if (spawnProb == null) {
+      _spawnProb = 0.001;
+    } else {
+      _spawnProb = spawnProb;
+    }
+
+    _generators = [ () => new Walker(_resourceManager),
+                    () => new Swimmer(_resourceManager) ];
   }
 
   start() {
-
+    _enterFrameSub = onEnterFrame.listen(_onEnterFrame);
   }
 
   stop() {
+    _enterFrameSub.cancel();
+  }
 
+  _onEnterFrame(_) {
+    if (_current < _maxConcurrent &&  _random.nextDouble() <= _spawnProb) {
+      GenVisitor generator = _generators[_random.nextInt(_generators.length)];
+      NpcVisit visitor = generator();
+      _current++;
+
+      _container.addChild(visitor);
+      visitor.visit().then((_) {
+        _container.removeChild(visitor);
+        _current--;
+      });
+    }
   }
 }

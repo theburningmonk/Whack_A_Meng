@@ -55,7 +55,9 @@ void loadResources() {
                         ..timeLimit   = 30
                         ..spawnTime   = 5.0
                         ..retreatTime = 0.2
-                        ..stayTime    = 5.0;
+                        ..stayTime    = 5.0
+                        ..maxConcurrentNpc = 2
+                        ..npcSpawnProb     = 0.01;
 
   resourceManager = new ResourceManager()
 
