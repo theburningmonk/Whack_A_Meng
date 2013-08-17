@@ -2,8 +2,8 @@ part of whack_a_meng;
 
 class ScoreBoard extends Sprite {
   ResourceManager _resourceManager;
-  int _score = 0;
-  int _target;
+  int score = 0;
+  int target;
 
   int _hundredX = 42;
   int _tenX     = 82;
@@ -14,12 +14,12 @@ class ScoreBoard extends Sprite {
 
   TextField _scoreHundreds, _scoreTens, _scoreOnes;
 
-  ScoreBoard(this._resourceManager, this._target) {
+  ScoreBoard(this._resourceManager, this.target) {
     Bitmap background = new Bitmap(_resourceManager.getBitmapData("score_board"));
     addChild(background);
 
-    _draw(_target, 150, _targetColor);
-    List<TextField> scoreParts = _draw(_score, 55, _scoreColor);
+    _draw(target, 150, _targetColor);
+    List<TextField> scoreParts = _draw(score, 55, _scoreColor);
     _scoreHundreds = scoreParts[0];
     _scoreTens     = scoreParts[1];
     _scoreOnes     = scoreParts[2];
@@ -53,18 +53,18 @@ class ScoreBoard extends Sprite {
   }
 
   _drawScore() {
-    _scoreHundreds.text = (_score ~/ 100).toString();
-    _scoreTens.text     = (_score % 100 ~/ 10).toString();
-    _scoreOnes.text     = (_score % 10).toString();
+    _scoreHundreds.text = (score ~/ 100).toString();
+    _scoreTens.text     = (score % 100 ~/ 10).toString();
+    _scoreOnes.text     = (score % 10).toString();
   }
 
   increment() {
-    _score += 1;
+    score += 1;
     _drawScore();
   }
 
   decrement() {
-    _score -= 1;
+    score -= 1;
     _drawScore();
   }
 }

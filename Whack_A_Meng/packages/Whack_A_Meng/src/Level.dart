@@ -2,66 +2,62 @@ part of whack_a_meng;
 
 class Level extends Sprite {
   ResourceManager _resourceManager;
-  int level;
+  int _level;
+  LevelSpec _levelSpec;
 
   Random _random = new Random();
 
   int _leftOffset = 25;
   int _topOffset = 25;
 
+  ScoreBoard _scoreBoard;
+  NpcVisitScheduler _npcScheduler;
+
   List<Hole> _holes = new List<Hole>();
 
-  static Level Current;
+  Completer<int> _completer = new Completer<int>();
 
-  Level(this._resourceManager, this.level) {
-    Current = this;
+  Level(this._resourceManager, this._level) {
   }
 
-  start() {
+  Future<int> start() {
     _drawBackground();
 
-    LevelSpec levelSpec = _resourceManager.getCustomObject("level_${level}_spec");
+    _levelSpec = _resourceManager.getCustomObject("level_${_level}_spec");
 
-    ScoreBoard scoreBoard = new ScoreBoard(_resourceManager, levelSpec.target)
+    _scoreBoard = new ScoreBoard(_resourceManager, _levelSpec.target)
       ..x = 575
       ..y = 250;
-    addChild(scoreBoard);
+    addChild(_scoreBoard);
 
-    Clock clock = new Clock(_resourceManager, levelSpec.timeLimit)
+    Clock clock = new Clock(_resourceManager, _levelSpec.timeLimit)
       ..x = 605
       ..y = 100;
     addChild(clock);
 
     BitmapData holeData = _resourceManager.getBitmapData("hole");
 
-    for (var i = 1; i <= levelSpec.columns; i++) {
+    for (var i = 1; i <= _levelSpec.columns; i++) {
       int x = _leftOffset + 170 * i - holeData.width;
 
-      for (var j = 1; j <= levelSpec.rows; j++) {
+      for (var j = 1; j <= _levelSpec.rows; j++) {
         int y = _topOffset + 150 * j - holeData.height;
 
-        Hole hole = new Hole(_resourceManager, levelSpec.spawnTime, levelSpec.retreatTime, levelSpec.stayTime)
+        Hole hole = new Hole(_resourceManager, _levelSpec.spawnTime, _levelSpec.retreatTime, _levelSpec.stayTime)
                           ..x = x
                           ..y = y;
-        hole.onMengWhacked.listen((_) => scoreBoard.increment());
+        hole.onMengWhacked.listen((_) => _scoreBoard.increment());
         _holes.add(hole);
 
         addChild(hole);
       }
     }
-//
-//    StraightWalk walk = new StraightWalk(_resourceManager);
-//    addChild(walk);
-//    walk.visit().then((_) => removeChild(walk));
-//
-//    NpcVisit water = new WaterVisit(_resourceManager);
-//    addChild(water);
-//    water.visit().then((_) => removeChild(water));
 
-    new NpcVisitScheduler(_resourceManager, this, maxConcurrent : levelSpec.maxConcurrentNpc, spawnProb : levelSpec.npcSpawnProb)
-          .start();
+    _npcScheduler = new NpcVisitScheduler(_resourceManager, this, maxConcurrent : _levelSpec.maxConcurrentNpc, spawnProb : _levelSpec.npcSpawnProb);
+    _npcScheduler.start();
 
     clock.start().then(_timeUp);
+    return _completer.future;
   }
 
   _drawBackground() {
@@ -70,8 +66,8 @@ class Level extends Sprite {
     BitmapData tileData = _resourceManager.getBitmapData("${tileType}_plain");
     BitmapData riverData = _resourceManager.getBitmapData("${tileType}_river");
 
-    int hTiles = stage.width ~/ tileData.width;
-    int vTiles = stage.height ~/ tileData.height;
+    int hTiles = 800 ~/ tileData.width;
+    int vTiles = 600 ~/ tileData.height;
 
     for (int h = 0; h < hTiles; h++) {
       int x = tileData.width * h;
@@ -95,6 +91,14 @@ class Level extends Sprite {
   _timeUp(_) {
     for (var hole in _holes) {
       hole.disable();
+    }
+
+    _npcScheduler.stop();
+
+    if (_scoreBoard.score >= _levelSpec.target) {
+      _completer.complete(LevelResult.Win);
+    } else {
+      _completer.complete(LevelResult.TimeOut);
     }
   }
 }
