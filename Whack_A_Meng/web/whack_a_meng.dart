@@ -131,10 +131,10 @@ void loadResources() {
     ..addBitmapData("timeout_yeti_overlay",           "images/TIME_OUT_YETI_OVERLAY.png")
 
     // well done screen
-    ..addBitmapData("win",             "images/WIN.png")
-    ..addBitmapData("continue",        "images/CONTINUE.png")
-    ..addBitmapData("continue_hover",  "images/CONTINUE_HOVER.png")
-    ..addBitmapData("continue_click",  "images/CONTINUE_DOWN.png")
+    ..addBitmapData("win",            "images/WIN.png")
+    ..addBitmapData("continue",       "images/CONTINUE.png")
+    ..addBitmapData("continue_hover", "images/CONTINUE_HOVER.png")
+    ..addBitmapData("continue_click", "images/CONTINUE_DOWN.png")
     ..addBitmapData("win_gnome_overlay",              "images/WIN_GNOME_OVERLAY.png")
     ..addBitmapData("win_gui_overlay",                "images/WIN_GUI_OVERLAY.png")
     ..addBitmapData("win_meng_overlay",               "images/WIN_MENG_OVERLAY.png")

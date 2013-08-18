@@ -42,8 +42,6 @@ class Hole extends Sprite {
         ..x = 5
         ..y = 15;
 
-    _enterFrameSub = onEnterFrame.listen(_onEnterFrame);
-
     _mengWhackedController = new StreamController.broadcast();
   }
 
@@ -53,6 +51,10 @@ class Hole extends Sprite {
     if (!_isActive && _random.nextInt(500) < 1) {
       _spawnMeng();
     }
+  }
+
+  enable() {
+    _enterFrameSub = onEnterFrame.listen(_onEnterFrame);
   }
 
   disable() {

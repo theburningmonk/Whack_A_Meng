@@ -11,6 +11,7 @@ class Level extends Sprite {
   int _topOffset = 25;
 
   ScoreBoard _scoreBoard;
+  Clock _clock;
   NpcVisitScheduler _npcScheduler;
 
   List<Hole> _holes = new List<Hole>();
@@ -30,10 +31,10 @@ class Level extends Sprite {
       ..y = 250;
     addChild(_scoreBoard);
 
-    Clock clock = new Clock(_resourceManager, _levelSpec.timeLimit)
+    _clock = new Clock(_resourceManager, _levelSpec.timeLimit)
       ..x = 605
       ..y = 100;
-    addChild(clock);
+    addChild(_clock);
 
     BitmapData holeData = _resourceManager.getBitmapData("hole");
 
@@ -54,10 +55,19 @@ class Level extends Sprite {
     }
 
     _npcScheduler = new NpcVisitScheduler(_resourceManager, this, maxConcurrent : _levelSpec.maxConcurrentNpc, spawnProb : _levelSpec.npcSpawnProb);
-    _npcScheduler.start();
 
-    clock.start().then(_timeUp);
+    _start();
+
     return _completer.future;
+  }
+
+  _start() {
+    for (var hole in _holes) {
+      hole.enable();
+    }
+
+    _npcScheduler.start();
+    _clock.start().then(_timeUp);
   }
 
   _drawBackground() {
