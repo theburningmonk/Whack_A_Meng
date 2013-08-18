@@ -83,6 +83,15 @@ class Level extends Sprite {
       ..x = -bannerBackgroundData.width
       ..y = y;
 
+    TextField lvlTextField = new TextField()
+      ..text = "LEVEL $_level"
+      ..defaultTextFormat = new TextFormat("Calibri", 60, Color.White, bold : true)
+      ..y = 3;
+    lvlTextField
+      ..x = bannerBackground.width / 2 - lvlTextField.textWidth / 2
+      ..width = lvlTextField.textWidth;
+    banner.addChild(lvlTextField);
+
     addChild(banner);
 
     Completer completer = new Completer();
