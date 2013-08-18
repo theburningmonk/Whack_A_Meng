@@ -58,6 +58,10 @@ class Level extends Sprite {
 
     if (_levelSpec.tutorialName != null) {
       TutorialScreen tutorial = new TutorialScreen(_resourceManager, _levelSpec.tutorialName);
+      tutorial
+        ..x = 400 - tutorial.width / 2
+        ..y = 300 - tutorial.height / 2;
+
       addChild(tutorial);
 
       tutorial.onClose.listen((_) {
