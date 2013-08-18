@@ -44,13 +44,21 @@ class Game extends Sprite {
     _currentLevel.start().then((result) {
       Mouse.show();
 
-      if (result == LevelResult.Win) {
-        print("Win");
-      } else if (result == LevelResult.TimeOut) {
-        print("Time Out");
+      var resultScreen = new EndOfLevelScreen(_resourceManager, result);
+      addChild(resultScreen);
 
-        addChild(new EndOfLevelScreen(_resourceManager, result));
-      }
+      resultScreen.onClose.listen((_) {
+        if (result == LevelResult.TimeOut) {
+          _currentLevelNum = 1;
+        } else {
+          _currentLevelNum++;
+        }
+
+        removeChild(_currentLevel);
+        _startLevel();
+
+        removeChild(resultScreen);
+      });
     });
   }
 }
