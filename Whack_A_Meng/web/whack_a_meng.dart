@@ -52,7 +52,7 @@ void loadResources() {
                         ..columns     = 3
                         ..rows        = 3
                         ..target      = 10
-                        ..timeLimit   = 30
+                        ..timeLimit   = 10
                         ..spawnTime   = 5.0
                         ..retreatTime = 0.2
                         ..stayTime    = 5.0
@@ -100,8 +100,25 @@ void loadResources() {
       ..addBitmapData("tropical_river",   "images/TILE_TROPICAL_RIVER.png")
       ..addCustomObject("tile_types", tileTypes)
 
-      // graphical assets
+      // welcome screen
       ..addBitmapData("welcome",      "images/WELCOME.png")
+      ..addBitmapData("start",        "images/START.png")
+      ..addBitmapData("start_hover",  "images/START_HOVER.png")
+      ..addBitmapData("start_click",  "images/START_DOWN.png")
+
+      // timeout screen
+      ..addBitmapData("timeout",                        "images/TIME_OUT.png")
+      ..addBitmapData("timeout_gnome_overlay",          "images/TIME_OUT_GNOME_OVERLAY.png")
+      ..addBitmapData("timeout_gui_overlay",            "images/TIME_OUT_GUI_OVERLAY.png")
+      ..addBitmapData("timeout_meng_overlay",           "images/TIME_OUT_MENG_OVERLAY.png")
+      ..addBitmapData("timeout_mermaid_red_overlay",    "images/TIME_OUT_MERMAID_RED_OVERLAY.png")
+      ..addBitmapData("timeout_selkie_violet_overlay",  "images/TIME_OUT_SELKIE_VIOLET_OVERLAY.png")
+      ..addBitmapData("timeout_vege_lamb_overlay",      "images/TIME_OUT_VEGE_LAMB_OVERLAY.png")
+      ..addBitmapData("timeout_yeti_overlay",           "images/TIME_OUT_YETI_OVERLAY.png")
+      ..addBitmapData("retry",        "images/RETRY.png")
+      ..addBitmapData("retry_hover",  "images/RETRY_HOVER.png")
+      ..addBitmapData("retry_click",  "images/RETRY_DOWN.png")
+
       ..addBitmapData("hole",         "images/MARKETPLACE_ENV_HOLE_RABBIT.png")
       ..addBitmapData("hole_over",    "images/MARKETPLACE_ENV_HOLE_RABBIT_OVER.png")
       ..addBitmapData("hammer",       "images/HAMMER.png")
@@ -110,9 +127,7 @@ void loadResources() {
       ..addBitmapData("awesome",      "images/AWESOME.png")
       ..addBitmapData("ouch",         "images/OUCH.png")
       ..addBitmapData("wood_sign",    "images/WOOD_SIGN.png")
-      ..addBitmapData("start",        "images/START.png")
-      ..addBitmapData("start_hover",  "images/START_HOVER.png")
-      ..addBitmapData("start_click",  "images/START_DOWN.png")
+
       ..addBitmapData("clock_background", "images/CLOCK_BACKGROUND.png")
       ..addBitmapData("score_board",      "images/SCORE_BOARD.png")
 

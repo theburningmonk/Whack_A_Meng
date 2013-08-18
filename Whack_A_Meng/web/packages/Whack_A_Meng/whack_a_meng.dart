@@ -28,7 +28,6 @@ class Game extends Sprite {
   _onAddedToStage(Event e) {
     var hammer = new Hammer(_resourceManager);
     addChild(hammer);
-    Mouse.hide();
 
     onMouseMove.listen((evt) => Hammer.Instance.move(evt));
     onMouseClick.listen((evt) => Hammer.Instance.hit(evt));
@@ -39,14 +38,30 @@ class Game extends Sprite {
   _startLevel() {
     _currentLevel = new Level(_resourceManager, _currentLevelNum);
     addChildAt(_currentLevel, 0);
+
+    Mouse.hide();
+
     _currentLevel.start().then((result) {
+      Mouse.show();
+
       if (result == LevelResult.Win) {
         print("Win");
       } else if (result == LevelResult.TimeOut) {
         print("Time Out");
-      }
 
-      removeChild(_currentLevel);
+        addChild(new EndOfLevelScreen(_resourceManager, result));
+      }
     });
   }
+}
+
+abstract class OptionSelector {
+  Random _random = new Random();
+
+  dynamic pickOption() {
+    List options = getOptions();
+    return options[_random.nextInt(options.length)];
+  }
+
+  List getOptions();
 }

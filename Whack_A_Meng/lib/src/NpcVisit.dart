@@ -5,7 +5,7 @@ class Direction {
   static const int RightToLeft  = 2;
 }
 
-abstract class NpcVisit extends Sprite {
+abstract class NpcVisit extends Sprite with OptionSelector {
   Random random = new Random();
   Bitmap npc;
   int direction;
@@ -24,11 +24,8 @@ abstract class NpcVisit extends Sprite {
     }
   }
 
-  List<String> getNpcList();
-
   _pickNpc() {
-    List<String> npcs = getNpcList();
-    String npcName = npcs[random.nextInt(npcs.length)];
+    String npcName = pickOption();
     BitmapData background = resourceManager.getBitmapData(npcName);
     return new Bitmap(background);
   }
@@ -55,7 +52,7 @@ class Walker extends NpcVisit {
   Walker(ResourceManager resourceManager) : super(resourceManager) {
   }
 
-  List<String> getNpcList() {
+  List getOptions() {
     return _npcs;
   }
 
@@ -87,7 +84,7 @@ class Swimmer extends NpcVisit {
   Swimmer(ResourceManager resourceManager) : super(resourceManager) {
   }
 
-  List<String> getNpcList() {
+  List getOptions() {
     return _npcs;
   }
 
