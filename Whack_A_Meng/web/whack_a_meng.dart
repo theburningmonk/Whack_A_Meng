@@ -56,8 +56,9 @@ void loadResources() {
     ..spawnTime   = 5.0
     ..retreatTime = 0.2
     ..stayTime    = 5.0
-    ..maxConcurrentNpc = 2
-    ..npcSpawnProb     = 0.01;
+    ..maxConcurrentNpc = 0
+    ..npcSpawnProb     = 0.01
+    ..tutorialName     = "tutorial_play";
 
   LevelSpec lvl2 = new LevelSpec()
     ..columns     = 3
@@ -67,7 +68,7 @@ void loadResources() {
     ..spawnTime   = 3.0
     ..retreatTime = 0.2
     ..stayTime    = 4.0
-    ..maxConcurrentNpc = 2
+    ..maxConcurrentNpc = 1
     ..npcSpawnProb     = 0.01;
 
   resourceManager = new ResourceManager()
@@ -142,6 +143,9 @@ void loadResources() {
     ..addBitmapData("win_selkie_violet_overlay",      "images/WIN_SELKIE_VIOLET_OVERLAY.png")
     ..addBitmapData("win_vege_lamb_overlay",          "images/WIN_VEGE_LAMB_OVERLAY.png")
     ..addBitmapData("win_yeti_overlay",               "images/WIN_YETI_OVERLAY.png")
+
+    // tutorial
+    ..addBitmapData("tutorial_play", "images/TUTORIAL_PLAY.png")
 
     ..addBitmapData("hole",         "images/MARKETPLACE_ENV_HOLE_RABBIT.png")
     ..addBitmapData("hole_over",    "images/MARKETPLACE_ENV_HOLE_RABBIT_OVER.png")

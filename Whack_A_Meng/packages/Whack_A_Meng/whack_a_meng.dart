@@ -14,6 +14,7 @@ part "src/LevelResult.dart";
 part "src/LevelSpec.dart";
 part "src/NpcVisit.dart";
 part "src/ScoreBoard.dart";
+part "src/TutorialScreen.dart";
 part "src/WelcomeScreen.dart";
 
 class Game extends Sprite {

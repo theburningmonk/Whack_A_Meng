@@ -13,4 +13,6 @@ class LevelSpec {
 
   int maxConcurrentNpc; // the number of NPCs that can visit at the same time
   num npcSpawnProb;     // probability (0.0 - 1.0) of a NPC visiting on each frame
+
+  String tutorialName;  // name of the tutorial screen
 }

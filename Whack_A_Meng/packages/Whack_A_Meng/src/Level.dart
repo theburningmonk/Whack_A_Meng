@@ -56,11 +56,26 @@ class Level extends Sprite {
 
     _npcScheduler = new NpcVisitScheduler(_resourceManager, this, maxConcurrent : _levelSpec.maxConcurrentNpc, spawnProb : _levelSpec.npcSpawnProb);
 
-    num bannerY = 260;
-    _announceLevel(bannerY)
-      .then((_) => _showOverlay(bannerY, "start_level_ready")
-        .then((_) => _showOverlay(bannerY, "start_level_go")
-          .then((_) => _start())));
+    if (_levelSpec.tutorialName != null) {
+      TutorialScreen tutorial = new TutorialScreen(_resourceManager, _levelSpec.tutorialName);
+      addChild(tutorial);
+
+      tutorial.onClose.listen((_) {
+        removeChild(tutorial);
+
+        num bannerY = 260;
+        _announceLevel(bannerY)
+        .then((_) => _showOverlay(bannerY, "start_level_ready")
+          .then((_) => _showOverlay(bannerY, "start_level_go")
+            .then((_) => _start())));
+      });
+    } else {
+      num bannerY = 260;
+      _announceLevel(bannerY)
+        .then((_) => _showOverlay(bannerY, "start_level_ready")
+          .then((_) => _showOverlay(bannerY, "start_level_go")
+            .then((_) => _start())));
+    }
 
     return _completer.future;
   }
