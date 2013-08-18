@@ -56,7 +56,11 @@ class Level extends Sprite {
 
     _npcScheduler = new NpcVisitScheduler(_resourceManager, this, maxConcurrent : _levelSpec.maxConcurrentNpc, spawnProb : _levelSpec.npcSpawnProb);
 
-    _start();
+    num bannerY = 260;
+    _announceLevel(bannerY)
+      .then((_) => _showOverlay(bannerY, "start_level_ready")
+        .then((_) => _showOverlay(bannerY, "start_level_go")
+          .then((_) => _start())));
 
     return _completer.future;
   }
@@ -68,6 +72,57 @@ class Level extends Sprite {
 
     _npcScheduler.start();
     _clock.start().then(_timeUp);
+  }
+
+  Future _announceLevel(num y) {
+    Sprite banner = new Sprite();
+    BitmapData bannerBackgroundData = _resourceManager.getBitmapData("start_level");
+    Bitmap bannerBackground = new Bitmap(bannerBackgroundData);
+    banner.addChild(bannerBackground);
+    banner
+      ..x = -bannerBackgroundData.width
+      ..y = y;
+
+    addChild(banner);
+
+    Completer completer = new Completer();
+
+    stage.juggler.tween(banner, 0.6)
+      ..animate.x.to(-30)
+      ..onComplete = () {
+        stage.juggler.tween(banner, 0.6)
+          ..animate.x.to(800)
+          ..delay = 2
+          ..onComplete = () {
+            completer.complete();
+          };
+      };
+
+    return completer.future;
+  }
+
+  Future _showOverlay(num y, String overlayName) {
+    Completer completer = new Completer();
+
+    Bitmap overlay = new Bitmap(_resourceManager.getBitmapData(overlayName))
+      ..y = y
+      ..alpha = 0;
+
+    addChild(overlay);
+
+    stage.juggler.tween(overlay, 0.2)
+      ..animate.alpha.to(1)
+      ..onComplete = () {
+        stage.juggler.tween(overlay, 0.2)
+          ..animate.alpha.to(0)
+          ..delay = 1
+          ..onComplete = () {
+            removeChild(overlay);
+            completer.complete();
+          };
+      };
+
+    return completer.future;
   }
 
   _drawBackground() {

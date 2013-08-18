@@ -18,7 +18,7 @@ class Clock extends Sprite {
     _textField = new TextField()
       ..defaultTextFormat = new TextFormat("Calibri", 54, Color.Black, bold : true)
       ..text = _timeLeft.toString()
-      ..y = 28;
+      ..y = 27;
 
     _updateTextField();
     addChild(_textField);

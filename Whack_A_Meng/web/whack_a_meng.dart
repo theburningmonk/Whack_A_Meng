@@ -150,7 +150,10 @@ void loadResources() {
     ..addBitmapData("great",        "images/GREAT.png")
     ..addBitmapData("awesome",      "images/AWESOME.png")
     ..addBitmapData("ouch",         "images/OUCH.png")
-    ..addBitmapData("wood_sign",    "images/WOOD_SIGN.png")
+
+    ..addBitmapData("start_level",        "images/START_LEVEL_BANNER.png")
+    ..addBitmapData("start_level_ready",  "images/START_LEVEL_READY_OVERLAY.png")
+    ..addBitmapData("start_level_go",     "images/START_LEVEL_GO_OVERLAY.png")
 
     ..addBitmapData("clock_background", "images/CLOCK_BACKGROUND.png")
     ..addBitmapData("score_board",      "images/SCORE_BOARD.png")
