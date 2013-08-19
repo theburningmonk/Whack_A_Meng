@@ -81,7 +81,8 @@ void loadResources() {
     ..retreatTime = 0.2
     ..stayTime    = 3.5
     ..maxConcurrentNpc = 1
-    ..npcSpawnProb     = 0.01;
+    ..npcSpawnProb     = 0.01
+    ..tutorialName     = "tutorial_npc";
 
   LevelSpec lvl4 = new LevelSpec()
     ..columns     = 3
@@ -160,6 +161,8 @@ void loadResources() {
     ..maxConcurrentNpc = 3
     ..npcSpawnProb     = 0.03;
 
+  var levelSpecs = [ lvl1, lvl2, lvl3, lvl4, lvl5, lvl6, lvl7, lvl8, lvl9, lvl10 ];
+
   resourceManager = new ResourceManager()
 
     // character headshots
@@ -233,35 +236,29 @@ void loadResources() {
     ..addBitmapData("win_vege_lamb_overlay",          "images/WIN_VEGE_LAMB_OVERLAY.png")
     ..addBitmapData("win_yeti_overlay",               "images/WIN_YETI_OVERLAY.png")
 
-    // tutorial
-    ..addBitmapData("tutorial_play", "images/TUTORIAL_PLAY.png")
+    // tutorials
+    ..addBitmapData("tutorial_play",    "images/TUTORIAL_PLAY.png")
+    ..addBitmapData("tutorial_npc",     "images/TUTORIAL_NPC.png")
 
-    ..addBitmapData("hole",         "images/MARKETPLACE_ENV_HOLE_RABBIT.png")
-    ..addBitmapData("hole_over",    "images/MARKETPLACE_ENV_HOLE_RABBIT_OVER.png")
-    ..addBitmapData("hammer",       "images/HAMMER.png")
-    ..addBitmapData("whack",        "images/WHACK.png")
-    ..addBitmapData("great",        "images/GREAT.png")
-    ..addBitmapData("awesome",      "images/AWESOME.png")
-    ..addBitmapData("ouch",         "images/OUCH.png")
+    ..addBitmapData("hole",             "images/MARKETPLACE_ENV_HOLE_RABBIT.png")
+    ..addBitmapData("hole_over",        "images/MARKETPLACE_ENV_HOLE_RABBIT_OVER.png")
+    ..addBitmapData("hammer",           "images/HAMMER.png")
+    ..addBitmapData("whack",            "images/WHACK.png")
+    ..addBitmapData("great",            "images/GREAT.png")
+    ..addBitmapData("awesome",          "images/AWESOME.png")
+    ..addBitmapData("ouch",             "images/OUCH.png")
+
+    ..addBitmapData("clock_background", "images/CLOCK_BACKGROUND.png")
+    ..addBitmapData("score_board",      "images/SCORE_BOARD.png")
 
     ..addBitmapData("start_level",        "images/START_LEVEL_BANNER.png")
     ..addBitmapData("start_level_ready",  "images/START_LEVEL_READY_OVERLAY.png")
     ..addBitmapData("start_level_go",     "images/START_LEVEL_GO_OVERLAY.png")
 
-    ..addBitmapData("clock_background", "images/CLOCK_BACKGROUND.png")
-    ..addBitmapData("score_board",      "images/SCORE_BOARD.png")
+    ..addBitmapData("end_game", "images/END_GAME.png")
 
     // levels
-    ..addCustomObject("level_1_spec", new Future.value(lvl1))
-    ..addCustomObject("level_2_spec", new Future.value(lvl2))
-    ..addCustomObject("level_3_spec", new Future.value(lvl3))
-    ..addCustomObject("level_4_spec", new Future.value(lvl4))
-    ..addCustomObject("level_5_spec", new Future.value(lvl5))
-    ..addCustomObject("level_6_spec", new Future.value(lvl6))
-    ..addCustomObject("level_7_spec", new Future.value(lvl7))
-    ..addCustomObject("level_8_spec", new Future.value(lvl8))
-    ..addCustomObject("level_9_spec", new Future.value(lvl9))
-    ..addCustomObject("level_10_spec", new Future.value(lvl10));
+    ..addCustomObject("level_specs", new Future.value(levelSpecs));
 
   resourceManager.load().then((_) {
 

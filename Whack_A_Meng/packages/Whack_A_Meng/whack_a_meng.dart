@@ -20,9 +20,12 @@ part "src/WelcomeScreen.dart";
 class Game extends Sprite {
   ResourceManager _resourceManager;
   int _currentLevelNum = 1;
+  int _maxLevelNum;
   Level _currentLevel;
 
   Game(this._resourceManager) {
+    _maxLevelNum = _resourceManager.getCustomObject("level_specs").length;
+
     onAddedToStage.listen(_onAddedToStage);
   }
 
@@ -37,30 +40,36 @@ class Game extends Sprite {
   }
 
   _startLevel() {
-    _currentLevel = new Level(_resourceManager, _currentLevelNum);
-    addChildAt(_currentLevel, 0);
+    // no more levels
+    if (_currentLevelNum == _maxLevelNum) {
+      Bitmap endGameBitmap = new Bitmap(_resourceManager.getBitmapData("end_game"));
+      addChild(endGameBitmap);
+    } else {
+      _currentLevel = new Level(_resourceManager, _currentLevelNum);
+      addChildAt(_currentLevel, 0);
 
-    Mouse.hide();
+      Mouse.hide();
 
-    _currentLevel.start().then((result) {
-      Mouse.show();
+      _currentLevel.start().then((result) {
+        Mouse.show();
 
-      var resultScreen = new EndOfLevelScreen(_resourceManager, result);
-      addChild(resultScreen);
+        var resultScreen = new EndOfLevelScreen(_resourceManager, result);
+        addChild(resultScreen);
 
-      resultScreen.onClose.listen((_) {
-        if (result == LevelResult.TimeOut) {
-          _currentLevelNum = 1;
-        } else {
-          _currentLevelNum++;
-        }
+        resultScreen.onClose.listen((_) {
+          if (result == LevelResult.TimeOut) {
+            _currentLevelNum = 1;
+          } else {
+            _currentLevelNum++;
+          }
 
-        removeChild(_currentLevel);
-        _startLevel();
+          removeChild(_currentLevel);
+          _startLevel();
 
-        removeChild(resultScreen);
+          removeChild(resultScreen);
+        });
       });
-    });
+    }
   }
 }
 

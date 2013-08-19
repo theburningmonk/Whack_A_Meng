@@ -25,7 +25,7 @@ class Level extends Sprite {
   Future<int> start() {
     _drawBackground();
 
-    _levelSpec = _resourceManager.getCustomObject("level_${_level}_spec");
+    _levelSpec = _resourceManager.getCustomObject("level_specs")[_level-1];
 
     _scoreBoard = new ScoreBoard(_resourceManager, _levelSpec.target)
       ..x = 575
