@@ -10,11 +10,10 @@ Your task is simple - whack him whenever he pokes his head out of the rabbit hol
 To progress through each level you need to whack **Meng** at least the required number of times before the time runs out. Other monsters will occassionally pass by the scene, if you whack one of them by mistake (or just being naughty!) then your score will be deducted each time, so better watch out!
 
 ## Screenshots
-==============
-
-![Screenshot1] (http://s3.amazonaws.com/whack_a_meng/Screenshot1.png)
 
 *Whack Meng before time runs out*
+
+![Screenshot1] (http://s3.amazonaws.com/whack_a_meng/Screenshot1.png)
 
 ![Screenshot3] (http://s3.amazonaws.com/whack_a_meng/Screenshot2.png)
 
@@ -22,10 +21,10 @@ To progress through each level you need to whack **Meng** at least the required 
 
 ![Screenshot4] (http://s3.amazonaws.com/whack_a_meng/Screenshot4.png)
 
-![Screenshot5] (http://s3.amazonaws.com/whack_a_meng/Screenshot5.png)
-
 *Mind the other monsters passing by!*
 
-![Screenshot6] (http://s3.amazonaws.com/whack_a_meng/Screenshot6.png)
+![Screenshot5] (http://s3.amazonaws.com/whack_a_meng/Screenshot5.png)
 
 *Words of encouragement from peaceful monsters*
+
+![Screenshot6] (http://s3.amazonaws.com/whack_a_meng/Screenshot6.png)
