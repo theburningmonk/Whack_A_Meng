@@ -50,7 +50,6 @@ abstract class NpcVisit extends Sprite with OptionSelector, Whackable {
       }
 
       msg.x = -msg.width / 2;
-//      msg.y = y - msg.height / 2;
 
       addChild(msg);
 
