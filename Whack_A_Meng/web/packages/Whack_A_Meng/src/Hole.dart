@@ -58,6 +58,7 @@ class Hole extends Sprite {
   }
 
   disable() {
+    _retreatMeng();
     _enterFrameSub.cancel();
   }
 

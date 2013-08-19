@@ -52,47 +52,113 @@ void loadResources() {
   LevelSpec lvl1 = new LevelSpec()
     ..columns     = 3
     ..rows        = 3
-    ..target      = 5
+    ..target      = 3
     ..timeLimit   = 10
-    ..spawnTime   = 5.0
+    ..spawnTime   = 3.0
     ..retreatTime = 0.2
     ..stayTime    = 5.0
-    ..maxConcurrentNpc = 0 // no NPCs for the first level
+    ..maxConcurrentNpc = 0 // no NPCs for this level
     ..npcSpawnProb     = 0.01
     ..tutorialName     = "tutorial_play";
 
   LevelSpec lvl2 = new LevelSpec()
     ..columns     = 3
     ..rows        = 3
-    ..target      = 10
-    ..timeLimit   = 20
+    ..target      = 5
+    ..timeLimit   = 15
     ..spawnTime   = 3.0
     ..retreatTime = 0.2
     ..stayTime    = 4.0
-    ..maxConcurrentNpc = 1
+    ..maxConcurrentNpc = 0 // no npc for this level
     ..npcSpawnProb     = 0.01;
 
   LevelSpec lvl3 = new LevelSpec()
     ..columns     = 3
     ..rows        = 3
-    ..target      = 15
+    ..target      = 8
+    ..timeLimit   = 20
+    ..spawnTime   = 2.5
+    ..retreatTime = 0.2
+    ..stayTime    = 3.5
+    ..maxConcurrentNpc = 1
+    ..npcSpawnProb     = 0.01;
+
+  LevelSpec lvl4 = new LevelSpec()
+    ..columns     = 3
+    ..rows        = 3
+    ..target      = 12
+    ..timeLimit   = 25
+    ..spawnTime   = 2.25
+    ..retreatTime = 0.2
+    ..stayTime    = 3.25
+    ..maxConcurrentNpc = 1
+    ..npcSpawnProb     = 0.01;
+
+  LevelSpec lvl5 = new LevelSpec()
+    ..columns     = 3
+    ..rows        = 3
+    ..target      = 16
     ..timeLimit   = 30
     ..spawnTime   = 2.0
     ..retreatTime = 0.2
     ..stayTime    = 3.0
     ..maxConcurrentNpc = 2
-    ..npcSpawnProb     = 0.007;
+    ..npcSpawnProb     = 0.01;
 
-  LevelSpec lvl4 = new LevelSpec()
+  LevelSpec lvl6 = new LevelSpec()
     ..columns     = 3
     ..rows        = 3
-    ..target      = 18
+    ..target      = 20
     ..timeLimit   = 35
-    ..spawnTime   = 1.5
+    ..spawnTime   = 2.0
     ..retreatTime = 0.2
-    ..stayTime    = 2.7
+    ..stayTime    = 3.0
     ..maxConcurrentNpc = 2
     ..npcSpawnProb     = 0.01;
+
+  LevelSpec lvl7 = new LevelSpec()
+    ..columns     = 3
+    ..rows        = 3
+    ..target      = 24
+    ..timeLimit   = 38
+    ..spawnTime   = 1.8
+    ..retreatTime = 0.2
+    ..stayTime    = 2.8
+    ..maxConcurrentNpc = 2
+    ..npcSpawnProb     = 0.02;
+
+  LevelSpec lvl8 = new LevelSpec()
+    ..columns     = 3
+    ..rows        = 3
+    ..target      = 29
+    ..timeLimit   = 44
+    ..spawnTime   = 1.6
+    ..retreatTime = 0.2
+    ..stayTime    = 2.6
+    ..maxConcurrentNpc = 3
+    ..npcSpawnProb     = 0.018;
+
+  LevelSpec lvl9 = new LevelSpec()
+    ..columns     = 3
+    ..rows        = 3
+    ..target      = 35
+    ..timeLimit   = 49
+    ..spawnTime   = 1.4
+    ..retreatTime = 0.2
+    ..stayTime    = 2.4
+    ..maxConcurrentNpc = 3
+    ..npcSpawnProb     = 0.025;
+
+  LevelSpec lvl10 = new LevelSpec()
+    ..columns     = 3
+    ..rows        = 3
+    ..target      = 40
+    ..timeLimit   = 50
+    ..spawnTime   = 1.2
+    ..retreatTime = 0.2
+    ..stayTime    = 2.2
+    ..maxConcurrentNpc = 3
+    ..npcSpawnProb     = 0.03;
 
   resourceManager = new ResourceManager()
 
@@ -189,7 +255,13 @@ void loadResources() {
     ..addCustomObject("level_1_spec", new Future.value(lvl1))
     ..addCustomObject("level_2_spec", new Future.value(lvl2))
     ..addCustomObject("level_3_spec", new Future.value(lvl3))
-    ..addCustomObject("level_4_spec", new Future.value(lvl4));
+    ..addCustomObject("level_4_spec", new Future.value(lvl4))
+    ..addCustomObject("level_5_spec", new Future.value(lvl5))
+    ..addCustomObject("level_6_spec", new Future.value(lvl6))
+    ..addCustomObject("level_7_spec", new Future.value(lvl7))
+    ..addCustomObject("level_8_spec", new Future.value(lvl8))
+    ..addCustomObject("level_9_spec", new Future.value(lvl9))
+    ..addCustomObject("level_10_spec", new Future.value(lvl10));
 
   resourceManager.load().then((_) {
 

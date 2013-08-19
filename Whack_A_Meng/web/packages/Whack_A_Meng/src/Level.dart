@@ -8,7 +8,8 @@ class Level extends Sprite {
   Random _random = new Random();
 
   int _leftOffset = 25;
-  int _topOffset = 25;
+  int _topOffset  = 25;
+  num _bannerY    = 260;
 
   ScoreBoard _scoreBoard;
   Clock _clock;
@@ -85,23 +86,22 @@ class Level extends Sprite {
   }
 
   _showAnnouncements() {
-    num bannerY = 260;
-    _announceLevel(bannerY)
-      .then((_) => _showOverlay(bannerY, "start_level_ready")
-        .then((_) => _showOverlay(bannerY, "start_level_go")
+    _announce("LEVEL $_level")
+      .then((_) => _showOverlay("start_level_ready")
+        .then((_) => _showOverlay("start_level_go")
           .then((_) => _start())));
   }
 
-  Future _announceLevel(num y) {
+  Future _announce(String text) {
     BitmapData bannerBackgroundData = _resourceManager.getBitmapData("start_level");
     Bitmap bannerBackground = new Bitmap(bannerBackgroundData);
     Sprite banner = new Sprite()
       ..addChild(bannerBackground)
       ..x = -bannerBackgroundData.width
-      ..y = y;
+      ..y = _bannerY;
 
     TextField lvlTextField = new TextField()
-      ..text = "LEVEL $_level"
+      ..text = text
       ..defaultTextFormat = new TextFormat("Calibri", 60, Color.White, bold : true)
       ..y = 3;
     lvlTextField
@@ -127,11 +127,11 @@ class Level extends Sprite {
     return completer.future;
   }
 
-  Future _showOverlay(num y, String overlayName) {
+  Future _showOverlay(String overlayName) {
     Completer completer = new Completer();
 
     Bitmap overlay = new Bitmap(_resourceManager.getBitmapData(overlayName))
-      ..y = y
+      ..y = _bannerY
       ..alpha = 0;
 
     addChild(overlay);
@@ -186,10 +186,13 @@ class Level extends Sprite {
 
     _npcScheduler.stop();
 
-    if (_scoreBoard.score >= _levelSpec.target) {
-      _completer.complete(LevelResult.Win);
-    } else {
-      _completer.complete(LevelResult.TimeOut);
-    }
+    _announce("TIME UP")
+      .then((_) {
+        if (_scoreBoard.score >= _levelSpec.target) {
+          _completer.complete(LevelResult.Win);
+        } else {
+          _completer.complete(LevelResult.TimeOut);
+        }
+      });
   }
 }
