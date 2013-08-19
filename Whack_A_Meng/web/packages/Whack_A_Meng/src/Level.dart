@@ -55,7 +55,8 @@ class Level extends Sprite {
       }
     }
 
-    _npcScheduler = new NpcVisitScheduler(_resourceManager, this, maxConcurrent : _levelSpec.maxConcurrentNpc, spawnProb : _levelSpec.npcSpawnProb);
+    _npcScheduler = new NpcVisitScheduler(_resourceManager, this, maxConcurrent : _levelSpec.maxConcurrentNpc, spawnProb : _levelSpec.npcSpawnProb)
+      ..onNpcWhacked.listen((_) => _scoreBoard.decrement());
 
     if (_levelSpec.tutorialName != null) {
       TutorialScreen tutorial = new TutorialScreen(_resourceManager, _levelSpec.tutorialName);

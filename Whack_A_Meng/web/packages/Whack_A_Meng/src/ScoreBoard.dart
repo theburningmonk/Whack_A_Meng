@@ -59,12 +59,15 @@ class ScoreBoard extends Sprite {
   }
 
   increment() {
-    score += 1;
+    score++;
     _drawScore();
   }
 
   decrement() {
-    score -= 1;
+    if (score > 0) {
+      score--;
+    }
+
     _drawScore();
   }
 }

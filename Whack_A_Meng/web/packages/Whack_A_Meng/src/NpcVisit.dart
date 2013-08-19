@@ -5,12 +5,14 @@ class Direction {
   static const int RightToLeft  = 2;
 }
 
-abstract class NpcVisit extends Sprite with OptionSelector {
+abstract class NpcVisit extends Sprite with OptionSelector, Whackable {
   Random random = new Random();
   Bitmap npc;
   int direction;
 
   ResourceManager resourceManager;
+
+  Bitmap _hey, _ouch, _stopIt, _sadFace;
 
   NpcVisit(this.resourceManager) {
     npc = _pickNpc();
@@ -22,6 +24,38 @@ abstract class NpcVisit extends Sprite with OptionSelector {
       // npc image horizontally
       npc.scaleX = -1;
     }
+
+    _hey     = new Bitmap(resourceManager.getBitmapData("hey"));
+    _ouch    = new Bitmap(resourceManager.getBitmapData("ouch"));
+    _stopIt  = new Bitmap(resourceManager.getBitmapData("stop_it"));
+    _sadFace = new Bitmap(resourceManager.getBitmapData("sad_face"));
+
+    onMouseClick.listen((_) => whack());
+    onWhacked.listen((count) {
+      Bitmap msg;
+
+      switch (count) {
+        case 1:
+          msg = _hey;
+          break;
+        case 2:
+          msg =_stopIt;
+          break;
+        case 3:
+          msg = _ouch;
+          break;
+        default:
+          msg = _sadFace;
+          break;
+      }
+
+      msg.x = -msg.width / 2;
+//      msg.y = y - msg.height / 2;
+
+      addChild(msg);
+
+      stage.juggler.delayCall(() => removeChild(msg), 0.2);
+    });
   }
 
   _pickNpc() {
@@ -44,7 +78,7 @@ abstract class NpcVisit extends Sprite with OptionSelector {
   Future<NpcVisit> visit();
 }
 
-class Walker extends NpcVisit {
+class Walker extends NpcVisit with Whackable {
   List<String> _npcs = [ "gnome", "gui", "taotie", "yeti", "drop_bear", "meng_npc",
                         "pixie_banksia", "pixie_dandelion", "pixie_orchid" ];
   num _toX;
@@ -112,7 +146,15 @@ class Swimmer extends NpcVisit {
 
 typedef NpcVisit GenVisitor();
 
-class NpcVisitScheduler extends Sprite {
+class NpcWhackedEvent {
+  NpcVisit npc;
+  int count;
+
+  NpcWhackedEvent(this.npc, this.count) {
+  }
+}
+
+class NpcVisitScheduler extends DisplayObjectContainer {
   ResourceManager _resourceManager;
   DisplayObjectContainer _container;
 
@@ -122,6 +164,8 @@ class NpcVisitScheduler extends Sprite {
 
   List _generators;
   Random _random = new Random();
+
+  StreamController _onNpcWhackedController = new StreamController.broadcast();
 
   StreamSubscription _enterFrameSub;
 
@@ -142,6 +186,8 @@ class NpcVisitScheduler extends Sprite {
                     () => new Swimmer(_resourceManager) ];
   }
 
+  Stream get onNpcWhacked => _onNpcWhackedController.stream;
+
   start() {
     _enterFrameSub = onEnterFrame.listen(_onEnterFrame);
   }
@@ -154,7 +200,10 @@ class NpcVisitScheduler extends Sprite {
     if (_current < _maxConcurrent &&  _random.nextDouble() <= _spawnProb) {
       GenVisitor generator = _generators[_random.nextInt(_generators.length)];
       NpcVisit visitor = generator();
+
       _current++;
+
+      visitor.onWhacked.listen((count) => _onNpcWhackedController.add(new NpcWhackedEvent(visitor, count)));
 
       _container.addChild(visitor);
       visitor.visit().then((_) {

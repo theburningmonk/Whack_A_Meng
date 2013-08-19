@@ -246,7 +246,10 @@ void loadResources() {
     ..addBitmapData("whack",            "images/WHACK.png")
     ..addBitmapData("great",            "images/GREAT.png")
     ..addBitmapData("awesome",          "images/AWESOME.png")
+    ..addBitmapData("hey",              "images/HEY.png")
     ..addBitmapData("ouch",             "images/OUCH.png")
+    ..addBitmapData("stop_it",          "images/STOP_IT.png")
+    ..addBitmapData("sad_face",         "images/SAD_FACE.png")
 
     ..addBitmapData("clock_background", "images/CLOCK_BACKGROUND.png")
     ..addBitmapData("score_board",      "images/SCORE_BOARD.png")

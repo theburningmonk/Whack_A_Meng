@@ -73,6 +73,7 @@ class Game extends Sprite {
   }
 }
 
+// Mixin for a selector with number of potential options
 abstract class OptionSelector {
   Random _random = new Random();
 
@@ -82,4 +83,17 @@ abstract class OptionSelector {
   }
 
   List getOptions();
+}
+
+// Mixin for something that can be whacked!
+abstract class Whackable {
+  StreamController _onWhackedController = new StreamController.broadcast();
+
+  Stream get onWhacked => _onWhackedController.stream;
+  int _whackedCount = 0;
+
+  whack() {
+    _whackedCount++;
+    _onWhackedController.add(_whackedCount);
+  }
 }
