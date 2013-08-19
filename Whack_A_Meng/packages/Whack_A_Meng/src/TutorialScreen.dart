@@ -19,6 +19,9 @@ class TutorialScreen extends Sprite {
       ..y = 345;
     addChild(button);
     button.onMouseUp.listen((_) => _onCloseController.add(this));
+
+    width  = _background.width;
+    height = _background.height;
   }
 
   Stream get onClose => _onCloseController.stream;

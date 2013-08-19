@@ -58,23 +58,18 @@ class Level extends Sprite {
 
     if (_levelSpec.tutorialName != null) {
       TutorialScreen tutorial = new TutorialScreen(_resourceManager, _levelSpec.tutorialName);
+      tutorial
+        ..x = 400 - tutorial.width / 2
+        ..y = 300 - tutorial.height / 2;
+
       addChild(tutorial);
 
       tutorial.onClose.listen((_) {
         removeChild(tutorial);
-
-        num bannerY = 260;
-        _announceLevel(bannerY)
-        .then((_) => _showOverlay(bannerY, "start_level_ready")
-          .then((_) => _showOverlay(bannerY, "start_level_go")
-            .then((_) => _start())));
+        _showAnnouncements();
       });
     } else {
-      num bannerY = 260;
-      _announceLevel(bannerY)
-        .then((_) => _showOverlay(bannerY, "start_level_ready")
-          .then((_) => _showOverlay(bannerY, "start_level_go")
-            .then((_) => _start())));
+      _showAnnouncements();
     }
 
     return _completer.future;
@@ -89,12 +84,19 @@ class Level extends Sprite {
     _clock.start().then(_timeUp);
   }
 
+  _showAnnouncements() {
+    num bannerY = 260;
+    _announceLevel(bannerY)
+      .then((_) => _showOverlay(bannerY, "start_level_ready")
+        .then((_) => _showOverlay(bannerY, "start_level_go")
+          .then((_) => _start())));
+  }
+
   Future _announceLevel(num y) {
-    Sprite banner = new Sprite();
     BitmapData bannerBackgroundData = _resourceManager.getBitmapData("start_level");
     Bitmap bannerBackground = new Bitmap(bannerBackgroundData);
-    banner.addChild(bannerBackground);
-    banner
+    Sprite banner = new Sprite()
+      ..addChild(bannerBackground)
       ..x = -bannerBackgroundData.width
       ..y = y;
 
