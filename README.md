@@ -12,8 +12,17 @@ To progress through each level you need to whack **Meng** at least the required 
 ## Screenshots
 ==============
 
-[Screenshot1] (http://s3.amazonaws.com/whack_a_meng/Screenshot1.png)
-[Screenshot1] (http://s3.amazonaws.com/whack_a_meng/Screenshot1.png)
-[Screenshot1] (http://s3.amazonaws.com/whack_a_meng/Screenshot1.png)
-[Screenshot1] (http://s3.amazonaws.com/whack_a_meng/Screenshot1.png)
-[Screenshot1] (http://s3.amazonaws.com/whack_a_meng/Screenshot1.png)
+![Screenshot1] (http://s3.amazonaws.com/whack_a_meng/Screenshot1.png)
+*Whack Meng before time runs out*
+
+![Screenshot3] (http://s3.amazonaws.com/whack_a_meng/Screenshot2.png)
+
+![Screenshot3] (http://s3.amazonaws.com/whack_a_meng/Screenshot3.png)
+
+![Screenshot4] (http://s3.amazonaws.com/whack_a_meng/Screenshot4.png)
+
+![Screenshot5] (http://s3.amazonaws.com/whack_a_meng/Screenshot5.png)
+*Mind the other monsters passing by!*
+
+![Screenshot6] (http://s3.amazonaws.com/whack_a_meng/Screenshot6.png)
+*Words of encouragement from peaceful monsters*
