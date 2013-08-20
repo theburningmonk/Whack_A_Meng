@@ -115,7 +115,7 @@ void loadResources() {
     ..retreatTime = 0.2
     ..stayTime    = 3.0
     ..maxConcurrentNpc = 2
-    ..npcSpawnProb     = 0.01;
+    ..npcSpawnProb     = 0.02;
 
   LevelSpec lvl7 = new LevelSpec()
     ..columns     = 3
@@ -125,7 +125,7 @@ void loadResources() {
     ..spawnTime   = 1.8
     ..retreatTime = 0.2
     ..stayTime    = 2.8
-    ..maxConcurrentNpc = 2
+    ..maxConcurrentNpc = 3
     ..npcSpawnProb     = 0.02;
 
   LevelSpec lvl8 = new LevelSpec()
@@ -137,7 +137,7 @@ void loadResources() {
     ..retreatTime = 0.2
     ..stayTime    = 2.6
     ..maxConcurrentNpc = 3
-    ..npcSpawnProb     = 0.018;
+    ..npcSpawnProb     = 0.03;
 
   LevelSpec lvl9 = new LevelSpec()
     ..columns     = 3
@@ -148,7 +148,7 @@ void loadResources() {
     ..retreatTime = 0.2
     ..stayTime    = 2.4
     ..maxConcurrentNpc = 3
-    ..npcSpawnProb     = 0.025;
+    ..npcSpawnProb     = 0.04;
 
   LevelSpec lvl10 = new LevelSpec()
     ..columns     = 3
@@ -158,8 +158,8 @@ void loadResources() {
     ..spawnTime   = 1.2
     ..retreatTime = 0.2
     ..stayTime    = 2.2
-    ..maxConcurrentNpc = 3
-    ..npcSpawnProb     = 0.03;
+    ..maxConcurrentNpc = 4
+    ..npcSpawnProb     = 0.05;
 
   var levelSpecs = [ lvl1, lvl2, lvl3, lvl4, lvl5, lvl6, lvl7, lvl8, lvl9, lvl10 ];
 
