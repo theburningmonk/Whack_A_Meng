@@ -78,8 +78,8 @@ abstract class NpcVisit extends Sprite with OptionSelector, Whackable {
 }
 
 class Walker extends NpcVisit with Whackable {
-  List<String> _npcs = [ "gnome", "gui", "taotie", "yeti", "drop_bear", "meng_npc",
-                        "pixie_banksia", "pixie_dandelion", "pixie_orchid" ];
+  List<String> _npcs = [ "gnome", "gui", "taotie", "yeti", "drop_bear",
+                         "pixie_banksia", "pixie_dandelion", "pixie_orchid" ];
   num _toX;
 
   Walker(ResourceManager resourceManager) : super(resourceManager) {
