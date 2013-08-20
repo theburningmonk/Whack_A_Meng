@@ -9,6 +9,9 @@ Your task is simple - whack him whenever he pokes his head out of the rabbit hol
 
 To progress through each level you need to whack **Meng** at least the required number of times before the time runs out. Other monsters will occassionally pass by the scene, if you whack one of them by mistake (or just being naughty!) then your score will be deducted each time, so better watch out!
 
+A live playable version of the game is available [here](http://whackameng.theburningmonk.com/).
+
+
 ## Screenshots
 
 *Whack Meng before time runs out*
