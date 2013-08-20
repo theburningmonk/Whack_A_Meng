@@ -12,7 +12,7 @@ packages:
   stagexl:
     description:
       ref: null
-      resolved-ref: "5c6e06142ad12d1218eee94a4044b77c95782882"
+      resolved-ref: ed723f3503ba14a6f0efd6c69abb4770bd4c52a7
       url: "https://github.com/bp74/StageXL.git"
     source: git
-    version: "0.8.3+1"
+    version: "0.8.4"
