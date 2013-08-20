@@ -3,7 +3,7 @@ Whack A Meng
 
 What-A-Mole style mini-game centred around characters from the MMORPG [Here Be Monsters](http://apps.facebook.com/herebemonsters).
 
-For those unfamiliar with **Here Be Monsters**, the protagonist is `Meng the Terrible`, a baddie from the Nanjing storyline. 
+For those unfamiliar with **Here Be Monsters**, the antagonist is `Meng the Terrible`, a baddie from the Nanjing storyline. 
 
 Your task is simple - whack him whenever he pokes his head out of the rabbit hole!
 
