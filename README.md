@@ -11,6 +11,7 @@ To progress through each level you need to whack **Meng** at least the required 
 
 A live playable version of the game is available [here](http://whackameng.theburningmonk.com/).
 
+[![Build Status](https://drone.io/github.com/theburningmonk/Whack_A_Meng/status.png)](https://drone.io/github.com/theburningmonk/Whack_A_Meng/latest)
 
 ## Screenshots
 
