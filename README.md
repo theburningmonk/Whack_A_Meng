@@ -32,3 +32,7 @@ A live playable version of the game is available [here](http://whackameng.thebur
 *Words of encouragement from peaceful monsters*
 
 ![Screenshot6] (http://s3.amazonaws.com/whack_a_meng/Screenshot6.png)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/theburningmonk/whack_a_meng/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
